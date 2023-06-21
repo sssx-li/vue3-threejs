@@ -1,12 +1,21 @@
 const en = {
   title: 'Management System',
+  theme: {
+    dark: 'Dark',
+    light: 'Light',
+  },
   nav: {
     login: 'Login',
     logout: 'Logout',
     home: 'Home',
-    form: 'Form',
-    table: 'Table{subTitle}',
-    dark: 'Dark',
+    buffer: 'Buffer',
+    camera: 'Camera',
+    demo: 'Demo',
+    geometry: 'Geometry',
+    group: 'Group',
+    gui: 'Gui',
+    helper: 'Helper',
+    loader: 'Loader',
     light: 'Light',
   },
   errorTip: {

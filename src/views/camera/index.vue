@@ -1,10 +1,10 @@
 <template>
-  <div class="home-container">home</div>
+  <div class="camera-container">camera</div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-  name: 'home',
+  name: 'camera',
 });
 </script>
 

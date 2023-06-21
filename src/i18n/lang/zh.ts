@@ -2,14 +2,23 @@ import { TLangConfig } from './en';
 
 const zh: TLangConfig = {
   title: '后台管理系统',
+  theme: {
+    dark: '暗黑',
+    light: '浅亮',
+  },
   nav: {
     login: '登录',
     logout: '登出',
     home: '首页',
-    form: '表单',
-    table: '表格{subTitle}',
-    dark: '暗黑',
-    light: '浅亮',
+    buffer: '缓冲器',
+    camera: '相机',
+    demo: '案例',
+    geometry: '几何体',
+    group: '组',
+    gui: 'Gui',
+    helper: '辅助线',
+    loader: '加载器',
+    light: '灯光',
   },
   errorTip: {
     please_enter_username: '请输入用户名',

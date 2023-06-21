@@ -20,6 +20,9 @@ dependencies:
   pinia:
     specifier: ^2.1.4
     version: 2.1.4(typescript@4.9.5)(vue@3.3.4)
+  three:
+    specifier: ^0.153.0
+    version: 0.153.0
   vue:
     specifier: ^3.3.4
     version: 3.3.4
@@ -49,6 +52,9 @@ devDependencies:
   '@types/nprogress':
     specifier: ^0.2.0
     version: 0.2.0
+  '@types/three':
+    specifier: ^0.152.1
+    version: 0.152.1
   '@typescript-eslint/eslint-plugin':
     specifier: ^5.59.11
     version: 5.59.11(@typescript-eslint/parser@5.59.11)(eslint@8.43.0)(typescript@4.9.5)
@@ -1501,6 +1507,13 @@ packages:
       }
     dev: true
 
+  /@tweenjs/tween.js@18.6.4:
+    resolution:
+      {
+        integrity: sha512-lB9lMjuqjtuJrx7/kOkqQBtllspPIN+96OvTCeJ2j5FEzinoAXTdAMFnDAQT1KVPRlnYfBrqxtqP66vDM40xxQ==,
+      }
+    dev: true
+
   /@types/eslint-scope@3.7.4:
     resolution:
       {
@@ -1600,6 +1613,13 @@ packages:
       }
     dev: true
 
+  /@types/stats.js@0.17.0:
+    resolution:
+      {
+        integrity: sha512-9w+a7bR8PeB0dCT/HBULU2fMqf6BAzvKbxFboYhmDtDkKPiyXYbjoe2auwsXlEFI7CFNMF1dCv3dFH5Poy9R1w==,
+      }
+    dev: true
+
   /@types/svgo@2.6.4:
     resolution:
       {
@@ -1607,6 +1627,19 @@ packages:
       }
     dependencies:
       '@types/node': 18.16.18
+    dev: true
+
+  /@types/three@0.152.1:
+    resolution:
+      {
+        integrity: sha512-PMOCQnx9JRmq+2OUGTPoY9h1hTWD2L7/nmuW/SyNq1Vbq3Lwt3MNdl3wYSa4DvLTGv62NmIXD9jYdAOwohwJyw==,
+      }
+    dependencies:
+      '@tweenjs/tween.js': 18.6.4
+      '@types/stats.js': 0.17.0
+      '@types/webxr': 0.5.2
+      fflate: 0.6.10
+      lil-gui: 0.17.0
     dev: true
 
   /@types/web-bluetooth@0.0.16:
@@ -1621,6 +1654,13 @@ packages:
       {
         integrity: sha512-4p9vcSmxAayx72yn70joFoL44c9MO/0+iVEBIQXe3v2h2SiAsEIo/G5v6ObFWvNKRFjbrVadNf9LqEEZeQPzdA==,
       }
+
+  /@types/webxr@0.5.2:
+    resolution:
+      {
+        integrity: sha512-szL74BnIcok9m7QwYtVmQ+EdIKwbjPANudfuvDrAF8Cljg9MKUlIoc1w5tjj9PMpeSH3U1Xnx//czQybJ0EfSw==,
+      }
+    dev: true
 
   /@typescript-eslint/eslint-plugin@5.59.11(@typescript-eslint/parser@5.59.11)(eslint@8.43.0)(typescript@4.9.5):
     resolution:
@@ -4310,6 +4350,13 @@ packages:
       reusify: 1.0.4
     dev: true
 
+  /fflate@0.6.10:
+    resolution:
+      {
+        integrity: sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==,
+      }
+    dev: true
+
   /file-entry-cache@6.0.1:
     resolution:
       {
@@ -5395,6 +5442,13 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+    dev: true
+
+  /lil-gui@0.17.0:
+    resolution:
+      {
+        integrity: sha512-MVBHmgY+uEbmJNApAaPbtvNh1RCAeMnKym82SBjtp5rODTYKWtM+MXHCifLe2H2Ti1HuBGBtK/5SyG4ShQ3pUQ==,
+      }
     dev: true
 
   /lilconfig@2.1.0:
@@ -8053,6 +8107,13 @@ packages:
         integrity: sha512-N+8UisAXDGk8PFXP4HAzVR9nbfmVJ3zYLAWiTIoqC5v5isinhr+r5uaO8+7r3BMfuNIufIsA7RdpVgacC2cSpw==,
       }
     dev: true
+
+  /three@0.153.0:
+    resolution:
+      {
+        integrity: sha512-OCP2/uQR6GcDpSLnJt/3a4mdS0kNWcbfUXIwLoEMgLzEUIVIYsSDwskpmOii/AkDM+BBwrl6+CKgrjX9+E2aWg==,
+      }
+    dev: false
 
   /through2@4.0.2:
     resolution:
