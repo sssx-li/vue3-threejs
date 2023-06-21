@@ -32,7 +32,6 @@ export default defineConfig({
         'vue-router',
         'pinia',
         '@vueuse/core',
-        'vue-i18n',
         {
           from: 'vue-router',
           imports: ['RouteRecordRaw'],
@@ -94,7 +93,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
-      'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js', // 解决控制台警告问题(bundler)
     },
   },
   server: {
