@@ -29,7 +29,7 @@
         size="large"
         inactive-text="浅亮"
         @change="() => toggleDark"
-        class="theme-switch"
+        class="theme-switch mr-10px"
       />
       <el-dropdown @command="handleCommand">
         <span class="fhc outline-none">
