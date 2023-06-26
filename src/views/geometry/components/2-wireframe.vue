@@ -1,7 +1,7 @@
 <template>
-  <el-card class="box-card">
-    <template #header> 1.基础几个体 </template>
-    <div :id="id"></div>
+  <el-card>
+    <template #header> 2.几何体-线条渲染-wireframe </template>
+    <div id="geometry-wireframe"></div>
   </el-card>
 </template>
 
@@ -9,20 +9,20 @@
 import { useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-cube',
+  name: 'geometry-wireframe',
   inheritAttrs: false,
 });
-const props = withDefaults(defineProps<{ id?: string }>(), {
-  id: 'my-chart',
-});
-const width = 500;
-const height = 500;
+const width = 300;
+const height = 300;
 const { THREE, threeState } = useThree({
-  id: props.id,
+  id: 'geometry-wireframe',
   options: {
     width,
     height,
     cameraType: 'OrthographicCamera',
+    renderOptions: {
+      antialias: true,
+    },
   },
   ext: {
     left: -width / 2,
@@ -38,11 +38,11 @@ const { THREE, threeState } = useThree({
 // 添加mesh
 function addMesh() {
   // 几何体
-  const geometry = new THREE.BoxGeometry(100, 100, 100);
+  const geometry = new THREE.BoxGeometry(50, 50, 50);
   // 材质
   const material = new THREE.MeshLambertMaterial({
-    color: 0x0000ff, //三角面颜色(只有添加光源才生效)
-    wireframe: false, // 网格模型是否以线条的模式渲染(以面模式渲染时如果不设置光源整个立方体所有面均为黑色) 默认为false
+    color: 0x0000ff,
+    wireframe: true, // // 网格模型是否以线条的模式渲染,默认为false
   });
   const mesh = new THREE.Mesh(geometry, material); //网格模型对象Mesh
   threeState.scene?.add(mesh);
@@ -53,7 +53,7 @@ function addMesh() {
 function addLight() {
   // 点光源
   const light = new THREE.PointLight(0xffffff);
-  light.position.set(150, 150, 100);
+  light.position.set(150, 130, 100);
   threeState.scene?.add(light);
   // 环境光
   const ambient = new THREE.AmbientLight(0x444444);

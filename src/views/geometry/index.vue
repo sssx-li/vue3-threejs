@@ -1,11 +1,17 @@
 <template>
   <div class="geometry-container flex flex-wrap">
-    <baseCube />
+    <Cube />
+    <Wireframe />
+    <Controls />
+    <Spheregeometry />
   </div>
 </template>
 
 <script setup lang="ts">
-import baseCube from './components/baseCube.vue';
+import Cube from './components/1-cube.vue';
+import Wireframe from './components/2-wireframe.vue';
+import Controls from './components/3-controls.vue';
+import Spheregeometry from './components/4-spheregeometry.vue';
 defineOptions({
   name: 'geometry',
 });

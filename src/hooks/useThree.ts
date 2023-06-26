@@ -8,7 +8,11 @@ interface IOption<T = any> {
   cameraType?: TCamera; // 相机类型
   camera?: T;
   scene?: THREE.Scene; // 场景
-  renderer?: THREE.WebGLRenderer; // 渲染器
+  renderOptions?: THREE.WebGLRendererParameters; // 渲染器
+}
+
+interface IThreeState<T> extends Omit<IOption<T>, 'renderOptions'> {
+  renderer: THREE.WebGLRenderer;
 }
 
 interface IExt {
@@ -38,9 +42,7 @@ export function useThree(params: IThree) {
       height = window.innerHeight,
       cameraType = 'PerspectiveCamera',
       scene = new THREE.Scene(),
-      renderer = new THREE.WebGLRenderer({
-        antialias: true, // 是否抗锯齿
-      }),
+      renderOptions = {},
     },
     ext: {
       left = 0,
@@ -53,6 +55,7 @@ export function useThree(params: IThree) {
       aspect = 0,
     },
   } = params;
+
   let camera;
   switch (cameraType) {
     case 'OrthographicCamera':
@@ -71,12 +74,14 @@ export function useThree(params: IThree) {
     default:
       break;
   }
-  const threeState: IOption<typeof camera> = {
+  const threeState: IThreeState<typeof camera> = {
     width,
     height,
     scene,
     camera,
-    renderer,
+    renderer: new THREE.WebGLRenderer({
+      ...renderOptions,
+    }),
   };
   // 设置渲染器宽高
   threeState.renderer?.setSize(width!, height!);
