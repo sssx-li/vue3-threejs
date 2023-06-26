@@ -1,10 +1,10 @@
 <template>
-  <div class="buffer-container">buffer</div>
+  <div class="shadow-container">阴影</div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-  name: 'buffer',
+  name: 'base-shadow',
 });
 </script>
 

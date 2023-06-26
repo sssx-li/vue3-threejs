@@ -1,10 +1,10 @@
 <template>
-  <div class="helper-container">helper</div>
+  <div class="texture-container">纹理贴图</div>
 </template>
 
 <script setup lang="ts">
 defineOptions({
-  name: 'helper',
+  name: 'texture',
 });
 </script>
 
