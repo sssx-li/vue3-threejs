@@ -15,9 +15,8 @@ defineOptions({
 });
 const width = 300;
 const height = 300;
-const { THREE, threeState } = useThree({
-  id: 'geometry-controls',
-  options: {
+const { THREE, threeState } = useThree('geometry-controls', {
+  config: {
     width,
     height,
     cameraType: 'OrthographicCamera',
@@ -25,7 +24,7 @@ const { THREE, threeState } = useThree({
       antialias: true,
     },
   },
-  ext: {
+  cameraOptions: {
     left: -width / 2,
     right: width / 2,
     top: height / 2,

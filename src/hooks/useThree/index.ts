@@ -1,50 +1,15 @@
 import * as THREE from 'three';
+import { ICoordinate, IThree, IThreeState } from './type';
 
-type TCamera = 'OrthographicCamera' | 'PerspectiveCamera';
-
-interface IOption<T = any> {
-  width?: number;
-  height?: number;
-  cameraType?: TCamera; // 相机类型
-  camera?: T;
-  scene?: THREE.Scene; // 场景
-  renderOptions?: THREE.WebGLRendererParameters; // 渲染器
-}
-
-interface IThreeState<T> extends Omit<IOption<T>, 'renderOptions'> {
-  renderer: THREE.WebGLRenderer;
-}
-
-interface IExt {
-  left?: number; // 摄像机视锥体左侧面。
-  right?: number; // 摄像机视锥体右侧面。
-  top?: number; // 摄像机视锥体上侧面。
-  bottom?: number; // 摄像机视锥体下侧面。
-  near?: number; // 摄像机视锥体近端面
-  far?: number; // 摄像机视锥体远端面
-  // PerspectiveCamera
-  fov?: number; // 摄像机视锥体垂直视野角度
-  aspect?: number; // 摄像机视锥体长宽比
-}
-
-interface IThree {
-  id: string;
-  options: Omit<IOption, 'camera'>;
-  ext: IExt;
-  initFn?: () => void;
-}
-
-export function useThree(params: IThree) {
+export function useThree(id: string, params: IThree) {
   const {
-    id,
-    options: {
+    config: {
       width = window.innerWidth,
       height = window.innerHeight,
       cameraType = 'PerspectiveCamera',
-      scene = new THREE.Scene(),
       renderOptions = {},
     },
-    ext: {
+    cameraOptions: {
       left = 0,
       top = 0,
       right = 0,
@@ -77,7 +42,7 @@ export function useThree(params: IThree) {
   const threeState: IThreeState<typeof camera> = {
     width,
     height,
-    scene,
+    scene: new THREE.Scene(),
     camera,
     renderer: new THREE.WebGLRenderer({
       ...renderOptions,
@@ -88,6 +53,25 @@ export function useThree(params: IThree) {
   // 设置渲染器背景颜色及其透明度
   // threeState.renderer?.setClearColor(0xb9d3ff, 1);
 
+  function addPointToLine(pointArr: Array<ICoordinate>) {
+    const points: any[] = [];
+    pointArr.forEach((item) => {
+      points.push(new THREE.Vector3(item.x, item.y, item.z));
+    });
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    let material;
+    if (
+      !params.lineConfig?.type ||
+      params.lineConfig?.type === 'LineBasicMaterial'
+    ) {
+      material = new THREE.LineBasicMaterial(params.lineConfig!.options);
+    } else {
+      material = new THREE.LineDashedMaterial(params.lineConfig!.options);
+    }
+    const line = new THREE.Line(geometry, material);
+    return line;
+  }
+
   nextTick(() => {
     document.getElementById(id)?.appendChild(threeState.renderer!.domElement);
     params.initFn && params.initFn();
@@ -95,5 +79,6 @@ export function useThree(params: IThree) {
   return {
     THREE,
     threeState,
+    addPointToLine,
   };
 }
