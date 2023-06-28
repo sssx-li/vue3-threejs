@@ -1,5 +1,15 @@
 import * as THREE from 'three';
-import { ICoordinate, IThree, IThreeState } from './type';
+
+// line
+
+import { Line2 } from 'three/examples/jsm/lines/Line2';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
+import {
+  LineMaterial,
+  LineMaterialParameters,
+} from 'three/examples/jsm/lines/LineMaterial';
+
+import { IThree, IThreeState } from './type';
 
 export function useThree(id: string, params: IThree) {
   const {
@@ -53,22 +63,21 @@ export function useThree(id: string, params: IThree) {
   // 设置渲染器背景颜色及其透明度
   // threeState.renderer?.setClearColor(0xb9d3ff, 1);
 
-  function addPointToLine(pointArr: Array<ICoordinate>) {
-    const points: any[] = [];
-    pointArr.forEach((item) => {
-      points.push(new THREE.Vector3(item.x, item.y, item.z));
-    });
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    let material;
-    if (
-      !params.lineConfig?.type ||
-      params.lineConfig?.type === 'LineBasicMaterial'
-    ) {
-      material = new THREE.LineBasicMaterial(params.lineConfig!.options);
-    } else {
-      material = new THREE.LineDashedMaterial(params.lineConfig!.options);
-    }
-    const line = new THREE.Line(geometry, material);
+  // 绘制线条
+  function drawLine({
+    points,
+    lineOptions = {},
+  }: {
+    points: number[] | Float32Array;
+    lineOptions?: LineMaterialParameters;
+  }) {
+    const geometry = new LineGeometry();
+    geometry.setPositions(points);
+    const material = new LineMaterial({ color: 0x0000ff, ...lineOptions });
+    material.resolution.set(width, height);
+    const line = new Line2(geometry, material);
+    // 使用虚线必须调用computeLineDistances
+    line.computeLineDistances();
     return line;
   }
 
@@ -79,6 +88,6 @@ export function useThree(id: string, params: IThree) {
   return {
     THREE,
     threeState,
-    addPointToLine,
+    drawLine,
   };
 }

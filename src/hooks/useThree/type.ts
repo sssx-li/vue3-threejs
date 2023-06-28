@@ -1,18 +1,5 @@
 import * as THREE from 'three';
 
-// line
-export interface ICoordinate {
-  x: number;
-  y: number;
-  z: number;
-}
-export interface ILine {
-  type?: 'LineBasicMaterial' | 'LineDashedMaterial';
-  options?:
-    | THREE.LineBasicMaterialParameters
-    | THREE.LineDashedMaterialParameters;
-}
-
 // camera
 export type TCamera = 'OrthographicCamera' | 'PerspectiveCamera';
 export interface ICameraOption {
@@ -44,6 +31,5 @@ export interface IThreeState<T = any>
 export interface IThree {
   config: Omit<IConfig, 'camera' | 'scene'>;
   cameraOptions: ICameraOption;
-  lineConfig?: ILine;
   initFn?: () => void;
 }
