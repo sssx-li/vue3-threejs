@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
-// line
+// 轨道控制器(视觉控制器)
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 import { Line2 } from 'three/examples/jsm/lines/Line2';
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
@@ -18,6 +19,7 @@ export function useThree(id: string, params: IThree) {
       height = window.innerHeight,
       cameraType = 'PerspectiveCamera',
       renderOptions = {},
+      controled = true,
     },
     cameraOptions: {
       left = 0,
@@ -49,6 +51,7 @@ export function useThree(id: string, params: IThree) {
     default:
       break;
   }
+  const controlInstance = ref<OrbitControls>();
   const threeState: IThreeState<typeof camera> = {
     width,
     height,
@@ -81,13 +84,25 @@ export function useThree(id: string, params: IThree) {
     return line;
   }
 
-  nextTick(() => {
+  // 渲染函数
+  onMounted(() => {
     document.getElementById(id)?.appendChild(threeState.renderer!.domElement);
-    params.initFn && params.initFn();
+    if (controled) {
+      controlInstance.value = new OrbitControls(
+        threeState.camera!,
+        threeState.renderer.domElement
+      );
+    }
+    params.renderFn && params.renderFn();
+    threeState.renderer.render(threeState.scene!, threeState.camera!);
   });
   return {
     THREE,
+    OrbitControls,
+
     threeState,
+    controlInstance,
+
     drawLine,
   };
 }

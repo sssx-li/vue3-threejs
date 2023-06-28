@@ -18,13 +18,13 @@ const routes: Array<RouteRecordRaw> = [
         path: '/base',
         name: 'base',
         meta: { title: '基础', icon: 'home' },
-        redirect: '/base/lineCharacter',
+        redirect: '/base/line',
         children: [
           {
-            path: '/base/lineCharacter',
-            name: 'lineCharacter',
-            meta: { title: '线条-文字', icon: 'form' },
-            component: () => import('@/views/base/lineCharacter/index.vue'),
+            path: '/base/line',
+            name: 'line',
+            meta: { title: '线条', icon: 'form' },
+            component: () => import('@/views/base/line/index.vue'),
           },
           {
             path: '/base/curve',
@@ -106,6 +106,12 @@ const routes: Array<RouteRecordRaw> = [
         name: 'advanced',
         meta: { title: '进阶', icon: 'form' },
         children: [
+          {
+            path: '/advanced/text',
+            name: 'text',
+            meta: { title: '文字', icon: 'form' },
+            component: () => import('@/views/advanced/text/index.vue'),
+          },
           {
             path: '/advanced/animation',
             name: 'animation',

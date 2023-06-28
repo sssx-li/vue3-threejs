@@ -21,6 +21,7 @@ export interface IConfig<T = any> {
   camera?: T;
   scene?: THREE.Scene; // 场景
   renderOptions?: THREE.WebGLRendererParameters; // 渲染器
+  controled?: boolean; // 是否启用轨道控制器
 }
 
 export interface IThreeState<T = any>
@@ -31,5 +32,5 @@ export interface IThreeState<T = any>
 export interface IThree {
   config: Omit<IConfig, 'camera' | 'scene'>;
   cameraOptions: ICameraOption;
-  initFn?: () => void;
+  renderFn?: () => void;
 }
