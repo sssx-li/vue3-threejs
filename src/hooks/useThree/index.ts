@@ -19,7 +19,11 @@ export function useThree(id: string, params: IThree) {
       height = window.innerHeight,
       cameraType = 'PerspectiveCamera',
       renderOptions = {},
-      controled = true,
+      enableControl = true,
+      enableAxesHelper = false,
+      helperConfig = {
+        axesHelperSize: 10,
+      },
     },
     cameraOptions: {
       left = 0,
@@ -51,15 +55,16 @@ export function useThree(id: string, params: IThree) {
     default:
       break;
   }
-  const controlInstance = ref<OrbitControls>();
+  const helperState = reactive<{
+    controlInstance?: OrbitControls;
+    axesHelperInstance?: THREE.AxesHelper;
+  }>({});
   const threeState: IThreeState<typeof camera> = {
     width,
     height,
     scene: new THREE.Scene(),
     camera,
-    renderer: new THREE.WebGLRenderer({
-      ...renderOptions,
-    }),
+    renderer: new THREE.WebGLRenderer(renderOptions),
   };
   // 设置渲染器宽高
   threeState.renderer?.setSize(width!, height!);
@@ -87,21 +92,28 @@ export function useThree(id: string, params: IThree) {
   // 渲染函数
   onMounted(() => {
     document.getElementById(id)?.appendChild(threeState.renderer!.domElement);
-    if (controled) {
-      controlInstance.value = new OrbitControls(
+    // 轨道(视觉控制器)
+    if (enableControl) {
+      helperState.controlInstance = new OrbitControls(
         threeState.camera!,
         threeState.renderer.domElement
       );
     }
+    // 三维坐标轴辅助线
+    if (enableAxesHelper) {
+      helperState.axesHelperInstance = new THREE.AxesHelper(
+        helperConfig.axesHelperSize
+      );
+      threeState.scene?.add(toRaw(helperState.axesHelperInstance));
+    }
     params.renderFn && params.renderFn();
-    threeState.renderer.render(threeState.scene!, threeState.camera!);
   });
   return {
     THREE,
     OrbitControls,
 
     threeState,
-    controlInstance,
+    helperState,
 
     drawLine,
   };

@@ -1,5 +1,20 @@
 import * as THREE from 'three';
 
+export interface IHelper {
+  axesHelperSize?: number; // 坐标辅助线的size
+}
+export interface IConfig<T = any> {
+  width?: number;
+  height?: number;
+  cameraType?: TCamera; // 相机类型
+  camera?: T;
+  scene?: THREE.Scene; // 场景
+  renderOptions?: THREE.WebGLRendererParameters; // 渲染器
+  enableControl?: boolean; // 是否启用轨道控制器, 默认为true
+  enableAxesHelper?: boolean; // 是否启用坐标辅助线, 默认为false
+  helperConfig?: IHelper;
+}
+
 // camera
 export type TCamera = 'OrthographicCamera' | 'PerspectiveCamera';
 export interface ICameraOption {
@@ -12,16 +27,6 @@ export interface ICameraOption {
   // PerspectiveCamera
   fov?: number; // 摄像机视锥体垂直视野角度
   aspect?: number; // 摄像机视锥体长宽比
-}
-
-export interface IConfig<T = any> {
-  width?: number;
-  height?: number;
-  cameraType?: TCamera; // 相机类型
-  camera?: T;
-  scene?: THREE.Scene; // 场景
-  renderOptions?: THREE.WebGLRendererParameters; // 渲染器
-  controled?: boolean; // 是否启用轨道控制器
 }
 
 export interface IThreeState<T = any>

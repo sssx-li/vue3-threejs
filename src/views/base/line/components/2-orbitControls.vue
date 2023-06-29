@@ -1,7 +1,7 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.线条 </template>
-    <div id="base-line"></div>
+    <template #header> 2.轨道(视觉)控制器 </template>
+    <div id="base-orbitControls"></div>
   </el-card>
 </template>
 
@@ -9,18 +9,21 @@
 import { useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-line',
+  name: 'base-orbitControls',
   inheritAttrs: false,
 });
 
 const width = 300;
 const height = 300;
-const { threeState, drawLine } = useThree('base-line', {
+
+const { threeState, drawLine, helperState } = useThree('base-orbitControls', {
   config: {
     width,
     height,
     cameraType: 'OrthographicCamera',
-    enableControl: false, // 是否启用轨道(视觉)控制器，默认为true
+    renderOptions: {
+      alpha: true, // 是否透明
+    },
   },
   cameraOptions: {
     left: -width / 2,
@@ -79,8 +82,14 @@ function initDashedLine() {
   threeState.scene?.add(react);
 }
 
+function render() {
+  threeState.renderer.render(threeState.scene!, threeState.camera!);
+  requestAnimationFrame(render);
+}
+
 function initRender() {
-  threeState.camera?.position.set(0, 0, 200);
+  // 设置相机位置
+  threeState.camera?.position.set(100, 100, 200);
   threeState.camera?.lookAt(threeState.scene!.position);
   initLine();
   initDashedLine();
@@ -95,8 +104,19 @@ function initRender() {
   });
   react.position.set(0, -40, 0);
   threeState.scene?.add(react);
+  console.log('helperState', helperState);
+
   // 渲染
-  threeState.renderer.render(threeState.scene!, threeState.camera!);
+  // 1. 通过监听controlInstance的change事件来重新实现视觉控制
+  // 必须默认先渲染一次
+  // threeState.renderer.render(threeState.scene!, threeState.camera!);
+  // helperState.controlInstance?.addEventListener('change', (event) => {
+  //   console.log(event);
+  //   threeState.renderer?.render(threeState.scene!, threeState.camera!);
+  // });
+
+  // 2. 通过requestAnimationFrame来实现视觉控制
+  render();
 }
 </script>
 
