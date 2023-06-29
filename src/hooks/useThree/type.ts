@@ -1,11 +1,15 @@
 import * as THREE from 'three';
+import type { LineMaterialParameters } from 'three/examples/jsm/lines/LineMaterial';
+
+export interface IWH {
+  width: number;
+  height: number;
+}
 
 export interface IHelper {
   axesHelperSize?: number; // 坐标辅助线的size
 }
-export interface IConfig<T = any> {
-  width?: number;
-  height?: number;
+export interface IConfig<T = any> extends Partial<IWH> {
   cameraType?: TCamera; // 相机类型
   camera?: T;
   scene?: THREE.Scene; // 场景
@@ -38,4 +42,9 @@ export interface IThree {
   config: Omit<IConfig, 'camera' | 'scene'>;
   cameraOptions: ICameraOption;
   renderFn?: () => void;
+}
+
+export interface ILine {
+  points: number[] | Float32Array; // 线条点数据集合
+  lineOptions?: LineMaterialParameters; // 线条配置
 }

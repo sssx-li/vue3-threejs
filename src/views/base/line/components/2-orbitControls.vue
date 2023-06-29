@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { useThree } from '@/hooks';
+import { useLine, useThree } from '@/hooks';
 
 defineOptions({
   name: 'base-orbitControls',
@@ -16,7 +16,7 @@ defineOptions({
 const width = 300;
 const height = 300;
 
-const { threeState, drawLine, helperState } = useThree('base-orbitControls', {
+const { threeState, helperState } = useThree('base-orbitControls', {
   config: {
     width,
     height,
@@ -35,20 +35,21 @@ const { threeState, drawLine, helperState } = useThree('base-orbitControls', {
   },
   renderFn: initRender,
 });
+const { pointToLine } = useLine({ width, height });
 // 实线
 // 3个点为一组坐标(x,y,z)
 function initLine() {
-  const line = drawLine({
+  const line = pointToLine({
     points: [-30, 0, 0, 30, 0, 0],
   });
   line.position.set(-60, 100, 0);
   threeState.scene?.add(line);
-  const arrow = drawLine({
+  const arrow = pointToLine({
     points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
   });
   arrow.position.set(-60, 70, 0);
   threeState.scene?.add(arrow);
-  const react = drawLine({
+  const react = pointToLine({
     points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
   });
   react.position.set(-60, 20, 0);
@@ -56,7 +57,7 @@ function initLine() {
 }
 // 虚线
 function initDashedLine() {
-  const line = drawLine({
+  const line = pointToLine({
     points: [-30, 0, 0, 30, 0, 0],
     lineOptions: {
       dashed: true,
@@ -64,7 +65,7 @@ function initDashedLine() {
   });
   line.position.set(60, 100, 0);
   threeState.scene?.add(line);
-  const arrow = drawLine({
+  const arrow = pointToLine({
     points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
     lineOptions: {
       dashed: true,
@@ -72,7 +73,7 @@ function initDashedLine() {
   });
   arrow.position.set(60, 70, 0);
   threeState.scene?.add(arrow);
-  const react = drawLine({
+  const react = pointToLine({
     points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
     lineOptions: {
       dashed: true,
@@ -93,7 +94,7 @@ function initRender() {
   threeState.camera?.lookAt(threeState.scene!.position);
   initLine();
   initDashedLine();
-  const react = drawLine({
+  const react = pointToLine({
     points: new Float32Array([
       -30, -30, 0, 30, -30, 0, 30, 10, 0, -30, 10, 0, -30, -30, 0,
     ]),
