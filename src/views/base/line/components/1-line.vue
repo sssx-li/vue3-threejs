@@ -33,6 +33,7 @@ const { threeState } = useThree('base-line', {
     near: 1,
     far: 1000,
   },
+  cameraPosition: { z: 200 },
   renderFn: initRender,
 });
 // 实线
@@ -108,8 +109,6 @@ function initDashedLine() {
 }
 
 function initRender() {
-  threeState.camera?.position.set(0, 0, 200);
-  threeState.camera?.lookAt(threeState.scene!.position);
   initLine();
   initDashedLine();
   const { lineInstance } = cereateLine({

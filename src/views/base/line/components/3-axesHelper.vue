@@ -36,6 +36,7 @@ const { threeState } = useThree('base-axeshelper', {
     near: 1,
     far: 1000,
   },
+  cameraPosition: { x: -100, y: 100, z: 200 },
   renderFn: initRender,
 });
 function initLine() {
@@ -115,9 +116,6 @@ function render() {
 }
 
 function initRender() {
-  // 设置相机位置
-  threeState.camera?.position.set(-100, 100, 200);
-  threeState.camera?.lookAt(threeState.scene!.position);
   initLine();
   initDashedLine();
   const { lineInstance } = cereateLine({

@@ -32,6 +32,7 @@ const { threeState } = useThree('base-curve', {
     near: 1,
     far: 1000,
   },
+  cameraPosition: { x: 100, y: 100, z: 200 },
   renderFn: initRender,
 });
 
@@ -79,8 +80,6 @@ function render() {
 }
 
 function initRender() {
-  threeState.camera?.position.set(100, 100, 200);
-  threeState.camera?.lookAt(threeState.scene!.position);
   initCCurve();
   render();
 }

@@ -59,6 +59,7 @@ export interface IThreeState<T extends TCamera = 'OrthographicCamera'>
 
 export interface IThree<T extends TCamera = 'OrthographicCamera'> {
   config: Omit<IConfig<T>, 'camera' | 'scene'>;
-  cameraOptions: ICameraType[T]['options'];
-  renderFn?: () => void;
+  cameraOptions: ICameraType[T]['options']; // 相机配置参数
+  cameraPosition?: { x?: number; y?: number; z?: number }; // 相机位置
+  renderFn?: () => void; // 渲染方法
 }
