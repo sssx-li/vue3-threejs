@@ -1,25 +1,24 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 3.曲线 </template>
-    <div id="base-axeshelper"></div>
+    <template #header> 1.曲线-ArcCurve </template>
+    <div id="base-curve"></div>
   </el-card>
 </template>
 
 <script setup lang="ts">
-import { useThree } from '@/hooks';
+import { createCurve, useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-axeshelper',
+  name: 'base-curve',
   inheritAttrs: false,
 });
 
-const width = 300;
-const height = 300;
-const { threeState } = useThree('base-axeshelper', {
+const width = 400;
+const height = 400;
+const { threeState } = useThree('base-curve', {
   config: {
     width,
     height,
-    cameraType: 'OrthographicCamera',
     enableAxesHelper: true,
     helperConfig: {
       axesHelperSize: 150,
@@ -35,6 +34,27 @@ const { threeState } = useThree('base-axeshelper', {
   },
   renderFn: initRender,
 });
+const { curveInstance } = createCurve<'ArcCurve', 'LineDashedMaterial'>(
+  'ArcCurve',
+  {
+    options: {
+      aX: 0,
+      aY: 0,
+      aRadius: 50,
+      aStartAngle: 0,
+      aEndAngle: 2 * Math.PI,
+      aClockwise: false,
+    },
+    lineconfig: {
+      dashed: true,
+      pointsCount: 50,
+      options: {
+        dashSize: 3,
+        gapSize: 10,
+      },
+    },
+  }
+);
 
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
@@ -44,16 +64,7 @@ function render() {
 function initRender() {
   threeState.camera?.position.set(100, 100, 200);
   threeState.camera?.lookAt(threeState.scene!.position);
-  // 渲染
-  // 1. 通过监听controlInstance的change事件来重新实现视觉控制
-  // 必须默认先渲染一次
-  // threeState.renderer.render(threeState.scene!, threeState.camera!);
-  // controlInstance.value?.addEventListener('change', (event) => {
-  //   console.log(event);
-  //   threeState.renderer?.render(threeState.scene!, threeState.camera!);
-  // });
-
-  // 2. 通过requestAnimationFrame来实现视觉控制
+  threeState.scene?.add(curveInstance!);
   render();
 }
 </script>

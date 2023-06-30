@@ -6,23 +6,22 @@
 </template>
 
 <script setup lang="ts">
-import { useLine, useThree } from '@/hooks';
+import { cereateLine, useThree } from '@/hooks';
 
 defineOptions({
   name: 'base-orbitControls',
   inheritAttrs: false,
 });
 
-const width = 300;
-const height = 300;
+const width = 400;
+const height = 400;
 
 const { threeState, helperState } = useThree('base-orbitControls', {
   config: {
     width,
     height,
-    cameraType: 'OrthographicCamera',
     renderOptions: {
-      alpha: true, // 是否透明
+      antialias: true,
     },
   },
   cameraOptions: {
@@ -35,52 +34,71 @@ const { threeState, helperState } = useThree('base-orbitControls', {
   },
   renderFn: initRender,
 });
-const { pointToLine } = useLine({ width, height });
-// 实线
-// 3个点为一组坐标(x,y,z)
 function initLine() {
-  const line = pointToLine({
-    points: [-30, 0, 0, 30, 0, 0],
+  const { lineInstance } = cereateLine({
+    useLine2: true,
+    line2Options: {
+      width,
+      height,
+      points: [-30, 0, 0, 30, 0, 0],
+    },
   });
-  line.position.set(-60, 100, 0);
-  threeState.scene?.add(line);
-  const arrow = pointToLine({
-    points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
+  lineInstance.position.set(-60, 100, 0);
+  threeState.scene?.add(lineInstance);
+  const { lineInstance: arrowLine } = cereateLine({
+    useLine2: true,
+    line2Options: {
+      width,
+      height,
+      points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
+    },
   });
-  arrow.position.set(-60, 70, 0);
-  threeState.scene?.add(arrow);
-  const react = pointToLine({
-    points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
+  arrowLine.position.set(-60, 70, 0);
+  threeState.scene?.add(arrowLine);
+  const { lineInstance: reactLine } = cereateLine({
+    useLine2: true,
+    line2Options: {
+      width,
+      height,
+      points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
+    },
   });
-  react.position.set(-60, 20, 0);
-  threeState.scene?.add(react);
+  reactLine.position.set(-60, 20, 0);
+  threeState.scene?.add(reactLine);
 }
 // 虚线
 function initDashedLine() {
-  const line = pointToLine({
-    points: [-30, 0, 0, 30, 0, 0],
-    lineOptions: {
-      dashed: true,
-    },
+  const { lineInstance } = cereateLine<'LineDashedMaterial'>({
+    dashed: true,
+    points: [
+      [-30, 0, 0],
+      [30, 0, 0],
+    ],
   });
-  line.position.set(60, 100, 0);
-  threeState.scene?.add(line);
-  const arrow = pointToLine({
-    points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
-    lineOptions: {
-      dashed: true,
-    },
+  lineInstance.position.set(60, 100, 0);
+  threeState.scene?.add(lineInstance);
+  const { lineInstance: arrowLine } = cereateLine<'LineDashedMaterial'>({
+    dashed: true,
+    points: [
+      [-10, 0, 0],
+      [0, 10, 0],
+      [10, 0, 0],
+    ],
   });
-  arrow.position.set(60, 70, 0);
-  threeState.scene?.add(arrow);
-  const react = pointToLine({
-    points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
-    lineOptions: {
-      dashed: true,
-    },
+  arrowLine.position.set(60, 70, 0);
+  threeState.scene?.add(arrowLine);
+  const { lineInstance: reactLine } = cereateLine<'LineDashedMaterial'>({
+    dashed: true,
+    points: [
+      [-30, 0, 0],
+      [30, 0, 0],
+      [30, 30, 0],
+      [-30, 30, 0],
+      [-30, 0, 0],
+    ],
   });
-  react.position.set(60, 20, 0);
-  threeState.scene?.add(react);
+  reactLine.position.set(60, 20, 0);
+  threeState.scene?.add(reactLine);
 }
 
 function render() {
@@ -94,17 +112,20 @@ function initRender() {
   threeState.camera?.lookAt(threeState.scene!.position);
   initLine();
   initDashedLine();
-  const react = pointToLine({
-    points: new Float32Array([
-      -30, -30, 0, 30, -30, 0, 30, 10, 0, -30, 10, 0, -30, -30, 0,
-    ]),
-    lineOptions: {
-      linewidth: 2,
-      color: 0xff0000,
+  const { lineInstance } = cereateLine({
+    useLine2: true,
+    line2Options: {
+      points: new Float32Array([
+        -30, -30, 0, 30, -30, 0, 30, 10, 0, -30, 10, 0, -30, -30, 0,
+      ]),
+      options: {
+        linewidth: 4,
+        color: 0xff0000,
+      },
     },
   });
-  react.position.set(0, -40, 0);
-  threeState.scene?.add(react);
+  lineInstance.position.set(0, -40, 0);
+  threeState.scene?.add(lineInstance);
   console.log('helperState', helperState);
 
   // 渲染
