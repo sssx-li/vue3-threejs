@@ -1,16 +1,16 @@
 import { ObjToUnion } from '@/typing';
 import type { CurveType, Vector2, Vector3 } from 'three';
 
-import { ILineType, TLine } from '../line/type';
+import { ILineMaterialOptions, TLineMaterial } from '../line/type';
 
 export interface ICurveType {
   ArcCurve: {
-    aX?: number;
-    aY?: number;
-    aRadius?: number;
-    aStartAngle?: number;
-    aEndAngle?: number;
-    aClockwise?: boolean;
+    aX?: number; // 圆的中心的X坐标，默认值为0。
+    aY?: number; // 圆的中心的Y坐标，默认值为0。
+    aRadius?: number; // 圆的半径
+    aStartAngle?: number; // 以弧度来表示，从正X轴算起曲线开始的角度，默认值为0。
+    aEndAngle?: number; // 以弧度来表示，从正X轴算起曲线终止的角度，默认值为2 x Math.PI。
+    aClockwise?: boolean; // 椭圆是否按照顺时针方向来绘制，默认值为false。
   }; // 弧线
   CatmullRomCurve3: {
     points?: Vector3[];
@@ -67,12 +67,13 @@ export type TCurve = ObjToUnion<ICurveType>;
 
 export interface ICurve<
   T extends TCurve = 'ArcCurve',
-  D extends TLine = 'LineBasicMaterial'
+  D extends TLineMaterial = 'LineBasicMaterial'
 > {
+  lineType?: TLineMaterial; // 线条类型
   lineconfig?: {
     dashed?: boolean; // 是否使用虚线渲染
     pointsCount?: number; // 要将曲线划分为的分段数
-    options?: ILineType[D];
+    options?: ILineMaterialOptions[D];
   };
   options: ICurveType[T];
 }

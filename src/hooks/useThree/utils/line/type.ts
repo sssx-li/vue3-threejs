@@ -7,22 +7,22 @@ import type { LineMaterialParameters } from 'three/examples/jsm/lines/LineMateri
 import { IWH } from '@/hooks/useThree/type';
 import { ObjToUnion } from '@/typing';
 
-export interface ILine<T extends TLine = 'LineBasicMaterial'> {
-  dashed?: boolean;
-  points?: [number, number, number][];
-  options?: ILineType[T];
-  useLine2?: boolean; // 是否使用 useLine2
-  line2Options?: ILine2;
+export interface ILineMaterialOptions {
+  LineBasicMaterial: LineBasicMaterialParameters; // 基础材质参数
+  LineDashedMaterial: LineDashedMaterialParameters; // 虚线材质参数
 }
+export type TLineMaterial = ObjToUnion<ILineMaterialOptions>;
 
 export interface ILine2 extends Partial<IWH> {
   points: number[] | Float32Array; // 线条点数据集合
   options?: LineMaterialParameters; // 线条配置
 }
 
-export interface ILineType {
-  LineBasicMaterial: LineBasicMaterialParameters;
-  LineDashedMaterial: LineDashedMaterialParameters;
+export interface ILine<T extends TLineMaterial = 'LineBasicMaterial'> {
+  type?: TLineMaterial; // 线条材质类型
+  dashed?: boolean; // 是否使用虚线绘制
+  points?: [number, number, number][]; // 三维坐标信息
+  options?: ILineMaterialOptions[T]; // 材质配置参数
+  useLine2?: boolean; // 是否使用 useLine2
+  line2Options?: ILine2; // line2材质配置
 }
-
-export type TLine = ObjToUnion<ILineType>;

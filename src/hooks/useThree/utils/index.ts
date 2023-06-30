@@ -4,9 +4,6 @@ export * from './curve';
 import { TCamera } from '../type';
 
 // 判断value的值是否属于TCamera
-export function isCameraType<T extends TCamera>(
-  type: TCamera,
-  value: T
-): value is T {
+export function isCameraType<T extends TCamera>(type: TCamera, value: T) {
   return type === value;
 }

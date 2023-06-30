@@ -17,7 +17,6 @@ export interface IHelper {
   axesHelperSize?: number; // 坐标辅助线的size
 }
 
-// -------------相机Camera-------------
 export interface IDirection {
   left: number; // 摄像机视锥体左侧面。
   right: number; // 摄像机视锥体右侧面。
@@ -44,7 +43,7 @@ export interface ICameraType {
 export type TCamera = ObjToUnion<ICameraType>;
 export interface IConfig<T extends TCamera = 'OrthographicCamera'>
   extends Partial<IWH> {
-  cameraType?: T; // 相机类型
+  cameraType?: TCamera; // 相机类型
   camera?: ICameraType[T]['type'];
   scene?: Scene; // 场景
   renderOptions?: WebGLRendererParameters; // 渲染器

@@ -1,7 +1,7 @@
 import { BufferGeometry, Line, Vector3 } from 'three';
 
-import { ILine, TLine } from './type';
-import { createLineMateral } from './utils';
+import { ILine, TLineMaterial } from './type';
+import { createLineMateral, isLineMateralType } from './utils';
 
 // Line2
 import { Line2 } from 'three/examples/jsm/lines/Line2';
@@ -9,16 +9,17 @@ import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
 import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 
 // 线条
-export function cereateLine<T extends TLine = 'LineBasicMaterial'>(
-  params: ILine<T> = {
-    dashed: false,
-    points: [],
-    options: {},
-    useLine2: false,
-    line2Options: { points: [] },
-  }
+export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
+  params: ILine<T>
 ) {
-  const { dashed, useLine2, points, options, line2Options } = params;
+  const {
+    type = 'LineBasicMaterial',
+    dashed = false,
+    points = [],
+    options = {},
+    useLine2 = false,
+    line2Options = { points: [] },
+  } = params;
   let geometry, material, lineInstance;
   if (!useLine2) {
     if (!points || points.length === 0) {
@@ -28,7 +29,11 @@ export function cereateLine<T extends TLine = 'LineBasicMaterial'>(
       (item) => new Vector3(item[0], item[1], item[2])
     );
     geometry = new BufferGeometry().setFromPoints(linePoints);
-    material = createLineMateral<T>(dashed, options!);
+    material = createLineMateral<T>(
+      type as TLineMaterial as T,
+      dashed,
+      options!
+    );
     lineInstance = new Line(geometry, material);
   } else {
     geometry = new LineGeometry();
@@ -47,8 +52,15 @@ export function cereateLine<T extends TLine = 'LineBasicMaterial'>(
     );
     lineInstance = new Line2(geometry, material);
   }
-  // 使用虚线必须调用computeLineDistances
-  dashed && lineInstance.computeLineDistances();
+
+  if (
+    (isLineMateralType<T>('LineDashedMaterial', type as TLineMaterial as T) &&
+      dashed) ||
+    (useLine2 && dashed)
+  ) {
+    // 使用虚线必须调用computeLineDistances
+    lineInstance.computeLineDistances();
+  }
 
   return {
     lineInstance,

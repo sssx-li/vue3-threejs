@@ -73,7 +73,8 @@ function initLine() {
 // 虚线
 // 虚线
 function initDashedLine() {
-  const { lineInstance } = cereateLine<'LineDashedMaterial'>({
+  const { lineInstance } = cereateLine({
+    type: 'LineDashedMaterial',
     dashed: true,
     points: [
       [-30, 0, 0],
@@ -82,7 +83,8 @@ function initDashedLine() {
   });
   lineInstance.position.set(60, 100, 0);
   threeState.scene?.add(lineInstance);
-  const { lineInstance: arrowLine } = cereateLine<'LineDashedMaterial'>({
+  const { lineInstance: arrowLine } = cereateLine({
+    type: 'LineDashedMaterial',
     dashed: true,
     points: [
       [-10, 0, 0],
@@ -92,7 +94,8 @@ function initDashedLine() {
   });
   arrowLine.position.set(60, 70, 0);
   threeState.scene?.add(arrowLine);
-  const { lineInstance: reactLine } = cereateLine<'LineDashedMaterial'>({
+  const { lineInstance: reactLine } = cereateLine({
+    type: 'LineDashedMaterial',
     dashed: true,
     points: [
       [-30, 0, 0],

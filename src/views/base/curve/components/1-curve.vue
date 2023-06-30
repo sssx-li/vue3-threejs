@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.曲线-ArcCurve </template>
+    <template #header> 1.弧形曲线-ArcCurve </template>
     <div id="base-curve"></div>
   </el-card>
 </template>
@@ -34,16 +34,32 @@ const { threeState } = useThree('base-curve', {
   },
   renderFn: initRender,
 });
-const { curveInstance } = createCurve<'ArcCurve', 'LineDashedMaterial'>(
-  'ArcCurve',
-  {
+
+function initCCurve() {
+  // 实线
+  const { curveInstance } = createCurve('ArcCurve', {
+    lineType: 'LineBasicMaterial',
     options: {
       aX: 0,
       aY: 0,
-      aRadius: 50,
-      aStartAngle: 0,
-      aEndAngle: 2 * Math.PI,
-      aClockwise: false,
+      aRadius: 40,
+    },
+    lineconfig: {
+      pointsCount: 50,
+    },
+  });
+  threeState.scene?.add(curveInstance!);
+
+  // 虚线
+  const { curveInstance: dashCurve } = createCurve<
+    'ArcCurve',
+    'LineDashedMaterial'
+  >('ArcCurve', {
+    lineType: 'LineDashedMaterial',
+    options: {
+      aX: 0,
+      aY: 0,
+      aRadius: 80,
     },
     lineconfig: {
       dashed: true,
@@ -53,8 +69,9 @@ const { curveInstance } = createCurve<'ArcCurve', 'LineDashedMaterial'>(
         gapSize: 10,
       },
     },
-  }
-);
+  });
+  threeState.scene?.add(dashCurve!);
+}
 
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
@@ -64,7 +81,7 @@ function render() {
 function initRender() {
   threeState.camera?.position.set(100, 100, 200);
   threeState.camera?.lookAt(threeState.scene!.position);
-  threeState.scene?.add(curveInstance!);
+  initCCurve();
   render();
 }
 </script>

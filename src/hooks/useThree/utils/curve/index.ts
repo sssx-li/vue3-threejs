@@ -1,21 +1,26 @@
 import { ArcCurve, BufferGeometry, CubicBezierCurve, Line } from 'three';
-import { TLine } from '../line/type';
+import { TLineMaterial } from '../line/type';
 import { ICurve, TCurve } from './type';
 import { createLineMateral } from '../line/utils';
 
 // 曲线
+/**
+ *
+ * @param type 曲线类型
+ * @param params 曲线配置参数
+ * @returns
+ */
 export function createCurve<
   T extends TCurve = 'ArcCurve',
-  D extends TLine = 'LineBasicMaterial'
->(
-  type: T,
-  {
+  D extends TLineMaterial = 'LineBasicMaterial'
+>(type: T, params: ICurve<T, D>) {
+  const {
+    lineType = 'LineBasicMaterial',
     options,
     lineconfig = {
       dashed: false,
     },
-  }: ICurve<T, D>
-) {
+  } = params;
   let curve;
   switch (type) {
     case 'ArcCurve':
@@ -51,6 +56,7 @@ export function createCurve<
   const points = curve?.getPoints(lineconfig.pointsCount);
   const geometry = new BufferGeometry().setFromPoints(points!);
   const material = createLineMateral<D>(
+    lineType as TLineMaterial as D,
     lineconfig.dashed,
     lineconfig.options || {}
   );

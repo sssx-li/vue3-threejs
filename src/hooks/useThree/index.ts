@@ -27,7 +27,7 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
   } = params;
 
   let camera;
-  if (isCameraType(cameraType, 'OrthographicCamera')) {
+  if (isCameraType<T>('OrthographicCamera', cameraType as TCamera as T)) {
     const {
       left = 0,
       right = 0,
