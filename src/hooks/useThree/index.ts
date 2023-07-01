@@ -78,9 +78,9 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
     }
     // 设置相机位置
     threeState.camera?.position.set(
-      cameraPosition?.x || 0,
-      cameraPosition?.y || 0,
-      cameraPosition?.z || 0
+      cameraPosition.x || 0,
+      cameraPosition.y || 0,
+      cameraPosition.z || 0
     );
     threeState.camera?.lookAt(threeState.scene!.position);
     params.renderFn && params.renderFn();

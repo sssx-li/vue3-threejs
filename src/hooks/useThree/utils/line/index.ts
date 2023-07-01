@@ -19,6 +19,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
     options = {},
     useLine2 = false,
     line2Options = { points: [] },
+    position = {},
   } = params;
   let geometry, material, lineInstance;
   if (!useLine2) {
@@ -61,6 +62,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
     // 使用虚线必须调用computeLineDistances
     lineInstance.computeLineDistances();
   }
+  lineInstance.position.set(position.x || 0, position.y || 0, position.z || 0);
 
   return {
     lineInstance,

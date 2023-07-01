@@ -2,6 +2,7 @@ import { ObjToUnion } from '@/typing';
 import type { CurveType, Vector2, Vector3 } from 'three';
 
 import { ILineMaterialOptions, TLineMaterial } from '../line/type';
+import { ICoordinate } from '../../type';
 
 export interface ICurveType {
   ArcCurve: {
@@ -69,11 +70,12 @@ export interface ICurve<
   T extends TCurve = 'ArcCurve',
   D extends TLineMaterial = 'LineBasicMaterial'
 > {
-  lineType?: TLineMaterial; // 线条类型
+  lineType?: TLineMaterial; // 线条渲染类型
   lineconfig?: {
     dashed?: boolean; // 是否使用虚线渲染
     pointsCount?: number; // 要将曲线划分为的分段数
     options?: ILineMaterialOptions[D];
-  };
-  options: ICurveType[T];
+  }; // 线条材质配置
+  options: ICurveType[T]; // 曲线配置
+  position: Partial<ICoordinate>; // 弧线位移位置
 }

@@ -32,7 +32,7 @@ const { threeState, helperState } = useThree('base-orbitControls', {
     near: 1,
     far: 1000,
   },
-  cameraPosition: { x: 100, y: 100, z: 200 },
+  cameraPosition: { x: -100, y: 100, z: 200 },
   renderFn: initRender,
 });
 function initLine() {
@@ -43,8 +43,8 @@ function initLine() {
       height,
       points: [-30, 0, 0, 30, 0, 0],
     },
+    position: { x: -60, y: 100 },
   });
-  lineInstance.position.set(-60, 100, 0);
   threeState.scene?.add(lineInstance);
   const { lineInstance: arrowLine } = cereateLine({
     useLine2: true,
@@ -53,8 +53,8 @@ function initLine() {
       height,
       points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
     },
+    position: { x: -60, y: 70 },
   });
-  arrowLine.position.set(-60, 70, 0);
   threeState.scene?.add(arrowLine);
   const { lineInstance: reactLine } = cereateLine({
     useLine2: true,
@@ -63,8 +63,8 @@ function initLine() {
       height,
       points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
     },
+    position: { x: -60, y: 20 },
   });
-  reactLine.position.set(-60, 20, 0);
   threeState.scene?.add(reactLine);
 }
 // 虚线
@@ -76,8 +76,8 @@ function initDashedLine() {
       [-30, 0, 0],
       [30, 0, 0],
     ],
+    position: { x: 60, y: 100 },
   });
-  lineInstance.position.set(60, 100, 0);
   threeState.scene?.add(lineInstance);
   const { lineInstance: arrowLine } = cereateLine({
     type: 'LineDashedMaterial',
@@ -87,8 +87,8 @@ function initDashedLine() {
       [0, 10, 0],
       [10, 0, 0],
     ],
+    position: { x: 60, y: 70 },
   });
-  arrowLine.position.set(60, 70, 0);
   threeState.scene?.add(arrowLine);
   const { lineInstance: reactLine } = cereateLine({
     type: 'LineDashedMaterial',
@@ -100,8 +100,8 @@ function initDashedLine() {
       [-30, 30, 0],
       [-30, 0, 0],
     ],
+    position: { x: 60, y: 20 },
   });
-  reactLine.position.set(60, 20, 0);
   threeState.scene?.add(reactLine);
 }
 
@@ -125,8 +125,8 @@ function initRender() {
         color: 0xff0000,
       },
     },
+    position: { y: -40 },
   });
-  lineInstance.position.set(0, -40, 0);
   threeState.scene?.add(lineInstance);
   console.log('helperState', helperState);
 

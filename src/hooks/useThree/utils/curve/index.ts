@@ -20,6 +20,7 @@ export function createCurve<
     lineconfig = {
       dashed: false,
     },
+    position = {},
   } = params;
   let curve;
   switch (type) {
@@ -63,6 +64,7 @@ export function createCurve<
   const curveInstance = new Line(geometry, material);
   // 使用虚线必须调用computeLineDistances
   lineconfig.dashed && curveInstance.computeLineDistances();
+  curveInstance.position.set(position.x || 0, position.y || 0, position.z || 0);
 
   // 弧线
   return {

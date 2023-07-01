@@ -27,6 +27,13 @@ export interface IDistance {
   near: number; // 摄像机视锥体近端面
   far: number; // 摄像机视锥体远端面
 }
+
+export interface ICoordinate {
+  x: number;
+  y: number;
+  z: number;
+}
+
 export interface ICameraType {
   OrthographicCamera: {
     type: OrthographicCamera;
@@ -60,6 +67,6 @@ export interface IThreeState<T extends TCamera = 'OrthographicCamera'>
 export interface IThree<T extends TCamera = 'OrthographicCamera'> {
   config: Omit<IConfig<T>, 'camera' | 'scene'>;
   cameraOptions: ICameraType[T]['options']; // 相机配置参数
-  cameraPosition?: { x?: number; y?: number; z?: number }; // 相机位置
+  cameraPosition?: Partial<ICoordinate>; // 相机位移位置
   renderFn?: () => void; // 渲染方法
 }

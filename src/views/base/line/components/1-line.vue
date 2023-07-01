@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.直线 </template>
+    <template #header> 1.线条 </template>
     <div id="base-line"></div>
   </el-card>
 </template>
@@ -46,8 +46,8 @@ function initLine() {
       height,
       points: [-30, 0, 0, 30, 0, 0],
     },
+    position: { x: -60, y: 100 },
   });
-  lineInstance.position.set(-60, 100, 0);
   threeState.scene?.add(lineInstance);
   const { lineInstance: arrowLine } = cereateLine({
     useLine2: true,
@@ -56,8 +56,8 @@ function initLine() {
       height,
       points: [-10, 0, 0, 0, 10, 0, 10, 0, 0],
     },
+    position: { x: -60, y: 70 },
   });
-  arrowLine.position.set(-60, 70, 0);
   threeState.scene?.add(arrowLine);
   const { lineInstance: reactLine } = cereateLine({
     useLine2: true,
@@ -66,8 +66,8 @@ function initLine() {
       height,
       points: [-30, 0, 0, 30, 0, 0, 30, 30, 0, -30, 30, 0, -30, 0, 0],
     },
+    position: { x: -60, y: 20 },
   });
-  reactLine.position.set(-60, 20, 0);
   threeState.scene?.add(reactLine);
 }
 // 虚线
@@ -79,8 +79,8 @@ function initDashedLine() {
       [-30, 0, 0],
       [30, 0, 0],
     ],
+    position: { x: 60, y: 100 },
   });
-  lineInstance.position.set(60, 100, 0);
   threeState.scene?.add(lineInstance);
   const { lineInstance: arrowLine } = cereateLine({
     type: 'LineDashedMaterial',
@@ -90,8 +90,8 @@ function initDashedLine() {
       [0, 10, 0],
       [10, 0, 0],
     ],
+    position: { x: 60, y: 70 },
   });
-  arrowLine.position.set(60, 70, 0);
   threeState.scene?.add(arrowLine);
   const { lineInstance: reactLine } = cereateLine({
     type: 'LineDashedMaterial',
@@ -103,8 +103,8 @@ function initDashedLine() {
       [-30, 30, 0],
       [-30, 0, 0],
     ],
+    position: { x: 60, y: 20 },
   });
-  reactLine.position.set(60, 20, 0);
   threeState.scene?.add(reactLine);
 }
 
@@ -122,8 +122,8 @@ function initRender() {
         color: 0xff0000,
       },
     },
+    position: { y: -40 },
   });
-  lineInstance.position.set(0, -40, 0);
   threeState.scene?.add(lineInstance);
   // 渲染
   threeState.renderer.render(threeState.scene!, threeState.camera!);
