@@ -70,12 +70,12 @@ export interface ICurve<
   T extends TCurve = 'ArcCurve',
   D extends TLineMaterial = 'LineBasicMaterial'
 > {
-  lineType?: TLineMaterial; // 线条渲染类型
+  lineType?: TLineMaterial & D; // 线条渲染类型
   lineconfig?: {
     dashed?: boolean; // 是否使用虚线渲染
     pointsCount?: number; // 要将曲线划分为的分段数
     options?: ILineMaterialOptions[D];
   }; // 线条材质配置
   options: ICurveType[T]; // 曲线配置
-  position: Partial<ICoordinate>; // 弧线位移位置
+  position?: Partial<ICoordinate>; // 弧线位移位置
 }

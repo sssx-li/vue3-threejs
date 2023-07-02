@@ -39,7 +39,6 @@ const { threeState } = useThree('base-curve', {
 function initCCurve() {
   // 实线
   const { curveInstance } = createCurve('ArcCurve', {
-    lineType: 'LineBasicMaterial',
     options: {
       aX: 0,
       aY: 0,
@@ -52,10 +51,7 @@ function initCCurve() {
   threeState.scene?.add(curveInstance!);
 
   // 虚线
-  const { curveInstance: dashCurve } = createCurve<
-    'ArcCurve',
-    'LineDashedMaterial'
-  >('ArcCurve', {
+  const { curveInstance: dashCurve } = createCurve('ArcCurve', {
     lineType: 'LineDashedMaterial',
     options: {
       aX: 0,

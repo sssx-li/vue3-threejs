@@ -13,7 +13,7 @@ import { createLineMateral } from '../line/utils';
 export function createCurve<
   T extends TCurve = 'ArcCurve',
   D extends TLineMaterial = 'LineBasicMaterial'
->(type: T, params: ICurve<T, D>) {
+>(type: TCurve, params: ICurve<T, D>) {
   const {
     lineType = 'LineBasicMaterial',
     options,
