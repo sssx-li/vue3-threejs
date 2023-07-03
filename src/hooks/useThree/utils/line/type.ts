@@ -4,7 +4,7 @@ import type {
 } from 'three';
 import type { LineMaterialParameters } from 'three/examples/jsm/lines/LineMaterial';
 
-import { ICoordinate, IWH } from '@/hooks/useThree/type';
+import { ICoordinate, IVector, IWH } from '@/hooks/useThree/type';
 import { ObjToUnion } from '@/typing';
 
 export interface ILineMaterialOptions {
@@ -19,9 +19,8 @@ export interface ILine2 extends Partial<IWH> {
 }
 
 export interface ILine<T extends TLineMaterial = 'LineBasicMaterial'> {
-  type?: TLineMaterial & T; // 线条材质类型
-  dashed?: boolean; // 是否使用虚线绘制
-  points?: [number, number, number][]; // 三维坐标点
+  type?: TLineMaterial; // 线条材质类型
+  points?: IVector['Vector3'][]; // 三维坐标点
   position?: Partial<ICoordinate>; // 线条位移位置
   options?: ILineMaterialOptions[T]; // 材质配置参数
   useLine2?: boolean; // 是否使用 useLine2

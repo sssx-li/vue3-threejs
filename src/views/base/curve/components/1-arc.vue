@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.弧形曲线-ArcCurve </template>
+    <template #header> 1.圆弧-ArcCurve </template>
     <div id="base-curve"></div>
   </el-card>
 </template>
@@ -52,17 +52,17 @@ function initCCurve() {
 
   // 虚线
   const { curveInstance: dashCurve } = createCurve('ArcCurve', {
-    lineType: 'LineDashedMaterial',
     options: {
       aX: 0,
       aY: 0,
       aRadius: 80,
     },
     lineconfig: {
-      dashed: true,
+      type: 'LineDashedMaterial',
       pointsCount: 50,
       options: {
         dashSize: 3,
+        color: 0x00ff00,
         gapSize: 10,
       },
     },

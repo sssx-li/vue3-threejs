@@ -71,7 +71,6 @@ function initLine() {
 function initDashedLine() {
   const { lineInstance } = cereateLine({
     type: 'LineDashedMaterial',
-    dashed: true,
     points: [
       [-30, 0, 0],
       [30, 0, 0],
@@ -81,7 +80,6 @@ function initDashedLine() {
   threeState.scene?.add(lineInstance);
   const { lineInstance: arrowLine } = cereateLine({
     type: 'LineDashedMaterial',
-    dashed: true,
     points: [
       [-10, 0, 0],
       [0, 10, 0],
@@ -92,7 +90,6 @@ function initDashedLine() {
   threeState.scene?.add(arrowLine);
   const { lineInstance: reactLine } = cereateLine({
     type: 'LineDashedMaterial',
-    dashed: true,
     points: [
       [-30, 0, 0],
       [30, 0, 0],
@@ -114,8 +111,8 @@ function initRender() {
   initLine();
   initDashedLine();
   const { lineInstance } = cereateLine({
+    type: 'LineDashedMaterial',
     useLine2: true,
-    dashed: true,
     line2Options: {
       points: new Float32Array([
         -30, -30, 0, 30, -30, 0, 30, 10, 0, -30, 10, 0, -30, -30, 0,

@@ -4,6 +4,8 @@ import type {
   WebGLRendererParameters,
   PerspectiveCamera,
   OrthographicCamera,
+  Vector2,
+  Vector3,
 } from 'three';
 
 import { ObjToUnion } from '@/typing';
@@ -11,6 +13,17 @@ import { ObjToUnion } from '@/typing';
 export interface IWH {
   width: number;
   height: number;
+}
+
+export type TVector = 'Vector2' | 'Vector3';
+// 判断Vector类型
+export type isVector<T extends TVector> = T extends 'Vector2'
+  ? Vector2
+  : Vector3;
+
+export interface IVector {
+  Vector2: [number, number];
+  Vector3: [number, number, number];
 }
 
 export interface IHelper {

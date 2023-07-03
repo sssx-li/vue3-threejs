@@ -13,14 +13,17 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
   params: ILine<T>
 ) {
   const {
-    type = 'LineBasicMaterial',
-    dashed = false,
+    type = 'LineBasicMaterial' as T,
     points = [],
     options = {},
     useLine2 = false,
     line2Options = { points: [] },
     position = {},
   } = params;
+  const isDashed = isLineMateralType<T>(
+    'LineDashedMaterial',
+    type as TLineMaterial as T
+  );
   let geometry, material, lineInstance;
   if (!useLine2) {
     if (!points || points.length === 0) {
@@ -32,7 +35,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
     geometry = new BufferGeometry().setFromPoints(linePoints);
     material = createLineMateral<T>(
       type as TLineMaterial as T,
-      dashed,
+      isDashed,
       options!
     );
     lineInstance = new Line(geometry, material);
@@ -45,7 +48,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
     const material = new LineMaterial({
       color: 0x0000ff,
       ...line2Options?.options,
-      dashed: !!dashed,
+      dashed: isDashed,
     });
     material.resolution.set(
       line2Options?.width || window.innerWidth,
@@ -54,11 +57,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
     lineInstance = new Line2(geometry, material);
   }
 
-  if (
-    (isLineMateralType<T>('LineDashedMaterial', type as TLineMaterial as T) &&
-      dashed) ||
-    (useLine2 && dashed)
-  ) {
+  if (isDashed) {
     // 使用虚线必须调用computeLineDistances
     lineInstance.computeLineDistances();
   }
