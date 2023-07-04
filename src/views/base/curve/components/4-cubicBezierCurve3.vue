@@ -1,7 +1,7 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 2.三维样条曲线-CatmullRomCurve3 </template>
-    <div id="base-catmullRomCurve3"></div>
+    <template #header> 4.三维三次贝塞尔曲线-CubicBezierCurve3 </template>
+    <div id="base-cubicBezierCurve3"></div>
   </el-card>
 </template>
 
@@ -9,13 +9,13 @@
 import { createCurve, useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-catmullRomCurve3',
+  name: 'base-cubicBezierCurve3',
   inheritAttrs: false,
 });
 
 const width = 400;
 const height = 400;
-const { threeState } = useThree('base-catmullRomCurve3', {
+const { threeState } = useThree('base-cubicBezierCurve3', {
   config: {
     width,
     height,
@@ -37,40 +37,47 @@ const { threeState } = useThree('base-catmullRomCurve3', {
 });
 
 function initCatmullRom() {
-  const { curveInstance } = createCurve('CatmullRomCurve3', {
+  const { curveInstance } = createCurve('CubicBezierCurve3', {
     options: {
-      points: [
-        [0, 0, 0],
-        [100, 0, 0],
-        [0, 100, 0],
-        [0, 0, 100],
-      ],
-      closed: true,
-    },
-    lineconfig: {
-      pointsCount: 50,
-    },
-  });
-  threeState.scene?.add(curveInstance!);
-  const { curveInstance: dashCurveInstance } = createCurve('CatmullRomCurve3', {
-    options: {
-      points: [
-        [10, 10, 10],
-        [50, 10, 10],
-        [10, 50, 10],
-        [10, 10, 50],
-      ],
-      closed: true,
+      v0: [50, 0, 0],
+      v1: [25, -75, 25],
+      v2: [-25, 75, 50],
+      v3: [-50, 0, 75],
     },
     lineconfig: {
       type: 'LineDashedMaterial',
       pointsCount: 50,
       options: {
         color: '#f60',
-        gapSize: 3,
+        gapSize: 10,
       },
     },
+    position: {
+      x: 50,
+      y: 50,
+      z: 50,
+    },
   });
+  threeState.scene?.add(curveInstance!);
+  const { curveInstance: dashCurveInstance } = createCurve(
+    'CubicBezierCurve3',
+    {
+      options: {
+        v0: [50, 0, 0],
+        v1: [25, 75, 25],
+        v2: [-25, -75, 50],
+        v3: [-50, 0, 75],
+      },
+      lineconfig: {
+        pointsCount: 50,
+      },
+      position: {
+        x: 50,
+        y: 50,
+        z: 50,
+      },
+    }
+  );
   threeState.scene?.add(dashCurveInstance!);
 }
 

@@ -137,7 +137,6 @@ export function createCurve<
   const geometry = new BufferGeometry().setFromPoints(points!);
   const material = createLineMateral<D>(
     lineconfig.type as TLineMaterial as D,
-    isDashed,
     params.lineconfig?.options || {}
   );
   const curveInstance = new Line(geometry, material);
@@ -148,6 +147,8 @@ export function createCurve<
   // 弧线
   return {
     curve,
+    geometry,
+    material,
     curveInstance,
   };
 }

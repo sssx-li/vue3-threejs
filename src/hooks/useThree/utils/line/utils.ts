@@ -12,9 +12,9 @@ export function isLineMateralType<T extends TLineMaterial>(
 // 创建线条材质
 export function createLineMateral<
   T extends TLineMaterial = 'LineBasicMaterial'
->(type: T, isdashed = false, options: ILineMaterialOptions[T]) {
+>(type: TLineMaterial | T, options: ILineMaterialOptions[T]) {
   let material;
-  if (isLineMateralType<T>('LineDashedMaterial', type) && !isdashed) {
+  if (isLineMateralType<T>('LineBasicMaterial', type as T)) {
     material = new LineBasicMaterial({
       color: 0x0000ff,
       ...options,

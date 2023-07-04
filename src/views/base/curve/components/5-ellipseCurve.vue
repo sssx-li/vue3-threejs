@@ -1,7 +1,7 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 2.三维样条曲线-CatmullRomCurve3 </template>
-    <div id="base-catmullRomCurve3"></div>
+    <template #header> 5.椭圆曲线-EllipseCurve </template>
+    <div id="base-ellipseCurve"></div>
   </el-card>
 </template>
 
@@ -9,13 +9,13 @@
 import { createCurve, useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-catmullRomCurve3',
+  name: 'base-ellipseCurve',
   inheritAttrs: false,
 });
 
 const width = 400;
 const height = 400;
-const { threeState } = useThree('base-catmullRomCurve3', {
+const { threeState } = useThree('base-ellipseCurve', {
   config: {
     width,
     height,
@@ -37,37 +37,31 @@ const { threeState } = useThree('base-catmullRomCurve3', {
 });
 
 function initCatmullRom() {
-  const { curveInstance } = createCurve('CatmullRomCurve3', {
+  const { curveInstance } = createCurve('EllipseCurve', {
     options: {
-      points: [
-        [0, 0, 0],
-        [100, 0, 0],
-        [0, 100, 0],
-        [0, 0, 100],
-      ],
-      closed: true,
+      aX: 0,
+      aY: 0,
+      xRadius: 60,
+      yRadius: 25,
     },
     lineconfig: {
       pointsCount: 50,
     },
   });
   threeState.scene?.add(curveInstance!);
-  const { curveInstance: dashCurveInstance } = createCurve('CatmullRomCurve3', {
+  const { curveInstance: dashCurveInstance } = createCurve('EllipseCurve', {
     options: {
-      points: [
-        [10, 10, 10],
-        [50, 10, 10],
-        [10, 50, 10],
-        [10, 10, 50],
-      ],
-      closed: true,
+      aX: 0,
+      aY: 0,
+      xRadius: 25,
+      yRadius: 60,
     },
     lineconfig: {
       type: 'LineDashedMaterial',
       pointsCount: 50,
       options: {
         color: '#f60',
-        gapSize: 3,
+        gapSize: 10,
       },
     },
   });

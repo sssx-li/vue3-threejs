@@ -1,17 +1,30 @@
 <template>
   <div class="geometry-container flex flex-wrap">
-    <Cube />
-    <Wireframe />
-    <Controls />
-    <Spheregeometry />
+    <BoxGeometry />
+    <CircleGeometry />
+    <ConeGeometry />
+    <CylinderGeometry />
+    <DodecahedronGeometry />
+    <EdgesGeometry />
+    <ExtrudeGeometry />
+    <IcosahedronGeometry />
+    <LatheGeometry />
+    <OctahedronGeometry />
   </div>
 </template>
 
 <script setup lang="ts">
-import Cube from './components/1-cube.vue';
-import Wireframe from './components/2-wireframe.vue';
-import Controls from './components/3-controls.vue';
-import Spheregeometry from './components/4-spheregeometry.vue';
+import BoxGeometry from './components/1-boxGeometry.vue';
+import CircleGeometry from './components/2-circleGeometry.vue';
+import ConeGeometry from './components/3-coneGeometry.vue';
+import CylinderGeometry from './components/4-cylinderGeometry.vue';
+import DodecahedronGeometry from './components/5-dodecahedronGeometry.vue';
+import EdgesGeometry from './components/6-edgesGeometry.vue';
+import ExtrudeGeometry from './components/7-extrudeGeometry.vue';
+import IcosahedronGeometry from './components/8-icosahedronGeometry.vue';
+import LatheGeometry from './components/9-latheGeometry.vue';
+import OctahedronGeometry from './components/10-octahedronGeometry.vue';
+
 defineOptions({
   name: 'geometry',
 });

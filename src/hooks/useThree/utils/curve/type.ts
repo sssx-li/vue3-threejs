@@ -35,7 +35,7 @@ export interface ICurveType {
     aX?: number; // 椭圆的中心的X坐标，默认值为0。
     aY?: number; // 椭圆的中心的Y坐标，默认值为0。
     xRadius?: number; // X轴向上椭圆的半径，默认值为1。
-    yRadius?: number; // X轴向上椭圆的半径，默认值为1。
+    yRadius?: number; // y轴向上椭圆的半径，默认值为1。
     aStartAngle?: number; // 以弧度来表示，从正X轴算起曲线开始的角度，默认值为0。
     aEndAngle?: number; // 以弧度来表示，从正X轴算起曲线终止的角度，默认值为2 x Math.PI。
     aClockwise?: boolean; // 椭圆是否按照顺时针方向来绘制，默认值为false。

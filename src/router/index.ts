@@ -36,7 +36,21 @@ const routes: Array<RouteRecordRaw> = [
             path: '/base/geometry',
             name: 'geometry',
             meta: { title: '几何体', icon: 'form' },
-            component: () => import('@/views/base/geometry/index.vue'),
+            redirect: '/base/geometry/first',
+            children: [
+              {
+                path: '/base/geometry/first',
+                name: 'geometryFirst',
+                meta: { title: '几何体1' },
+                component: () => import('@/views/base/geometry/index.vue'),
+              },
+              {
+                path: '/base/geometry/secound',
+                name: 'geometrySecound',
+                meta: { title: '几何体2' },
+                component: () => import('@/views/base/geometry/secound.vue'),
+              },
+            ],
           },
           {
             path: '/base/objects',

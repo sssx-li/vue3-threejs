@@ -33,11 +33,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
       (item) => new Vector3(item[0], item[1], item[2])
     );
     geometry = new BufferGeometry().setFromPoints(linePoints);
-    material = createLineMateral<T>(
-      type as TLineMaterial as T,
-      isDashed,
-      options!
-    );
+    material = createLineMateral<T>(type as TLineMaterial as T, options!);
     lineInstance = new Line(geometry, material);
   } else {
     geometry = new LineGeometry();
@@ -45,7 +41,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
       throw new Error('请传入points');
     }
     geometry.setPositions(line2Options.points);
-    const material = new LineMaterial({
+    material = new LineMaterial({
       color: 0x0000ff,
       ...line2Options?.options,
       dashed: isDashed,
@@ -64,6 +60,8 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
   lineInstance.position.set(position.x || 0, position.y || 0, position.z || 0);
 
   return {
+    geometry,
+    material,
     lineInstance,
   };
 }
