@@ -1,5 +1,6 @@
 export * from './line';
 export * from './curve';
+export * from './light';
 
 import { Vector2, Vector3 } from 'three';
 import { IVector, TCamera, TVector, isVector } from '../type';

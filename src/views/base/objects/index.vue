@@ -1,5 +1,5 @@
 <template>
-  <div class="objects-container flex flex-wrap"></div>
+  <div class="objects-container flex flex-wrap">物体</div>
 </template>
 
 <script setup lang="ts">

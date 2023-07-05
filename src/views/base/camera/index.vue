@@ -115,7 +115,7 @@ function addGUI() {
       threeState.camera?.updateProjectionMatrix();
     });
   guiO
-    .add(threeState.camera!, 'far', 0, 1000)
+    .add(threeState.camera!, 'far', 0, 10000)
     .name('远端面')
     .onChange(() => {
       threeState.camera?.updateProjectionMatrix();
@@ -135,13 +135,22 @@ function addGUI() {
       cameraP.updateProjectionMatrix();
     });
   guiP
-    .add(cameraP, 'far', 1, 1000)
+    .add(cameraP, 'far', 1, 10000)
     .name('远端面')
     .onChange(() => {
       cameraP.updateProjectionMatrix();
     });
 }
 
+let helper, helperP;
+
+function addHelper() {
+  helper = new THREE.CameraHelper(threeState.camera!);
+  threeState.scene?.add(helper);
+  helperP = new THREE.CameraHelper(cameraP);
+  threeState.scene?.add(helperP);
+  helperP.visible = false;
+}
 function render() {
   threeState.renderer.render(
     threeState.scene!,
@@ -154,6 +163,7 @@ function initRender() {
   initGeometry();
   addLight();
   addGUI();
+  addHelper();
   render();
 }
 watch(camera, (val) => {
@@ -161,6 +171,9 @@ watch(camera, (val) => {
   helperState.controlInstance!.object =
     val === 'OrthographicCamera' ? threeState.camera! : cameraP;
   helperState.controlInstance?.update();
+  const isO = val === 'OrthographicCamera';
+  helperP!.visible = !isO;
+  helper!.visible = isO;
 });
 </script>
 
