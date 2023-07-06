@@ -63,7 +63,7 @@ export interface ICameraType {
 export type TCamera = ObjToUnion<ICameraType>;
 export interface IConfig<T extends TCamera = 'OrthographicCamera'>
   extends Partial<IWH> {
-  cameraType?: TCamera; // 相机类型
+  cameraType?: TCamera | T; // 相机类型
   camera?: ICameraType[T]['type'];
   scene?: Scene; // 场景
   renderOptions?: WebGLRendererParameters; // 渲染器
