@@ -76,7 +76,7 @@ function initGeometry() {
   threeState.scene?.add(rectMesh);
 }
 
-const lightInstance: UnionToObj<
+const lightObj: UnionToObj<
   Exclude<TLight, 'AmbientLightProbe' | 'HemisphereLightProbe'>,
   { lightInstance: any; lightHelper?: any }
 > = {
@@ -122,10 +122,10 @@ function createLightFn<T extends TLight = 'AmbientLight'>(
     TLight,
     'AmbientLightProbe' | 'HemisphereLightProbe'
   >;
-  lightInstance[lightType] = createLight(lightType, params);
-  threeState.scene?.add(lightInstance[lightType].lightInstance);
+  lightObj[lightType] = createLight(lightType, params);
+  threeState.scene?.add(lightObj[lightType].lightInstance);
   if (hasHelper) {
-    threeState.scene?.add(lightInstance[lightType].lightHelper);
+    threeState.scene?.add(lightObj[lightType].lightHelper);
   }
 }
 function addLight() {
@@ -153,11 +153,10 @@ function addLight() {
 
   // 平面光光源
   createLightFn('RectAreaLight', true);
-  lightInstance.RectAreaLight.lightInstance.lookAt(160, 0, 160);
+  lightObj.RectAreaLight.lightInstance.lookAt(160, 0, 160);
 
   // 聚光灯
   createLightFn('SpotLight', true);
-  console.log(lightInstance.SpotLight);
 }
 
 function addGUI() {
@@ -166,45 +165,46 @@ function addGUI() {
   });
   const guiA = gui.addFolder('环境光参数').close();
   const ambient = {
-    intensity: lightInstance.AmbientLight.lightInstance.intensity, // 光强
+    intensity: lightObj.AmbientLight.lightInstance.intensity, // 光强
     color: 0x444444, // 光颜色
   };
   guiA
     .add(ambient, 'intensity', 0, 500, 0.01)
     .name('光照强度')
     .onChange((val: number) => {
-      lightInstance.AmbientLight.lightInstance.intensity = val;
+      lightObj.AmbientLight.lightInstance.intensity = val;
     });
   guiA
     .addColor(ambient, 'color')
     .listen()
     .name('光照颜色')
     .onChange((val: number) => {
-      lightInstance.AmbientLight.lightInstance.color = new THREE.Color(val);
+      lightObj.AmbientLight.lightInstance.color = new THREE.Color(val);
     });
 
   const guiD = gui.addFolder('平行光参数').close();
   const durectuibak = {
-    intensity: lightInstance.DirectionalLight.lightInstance.intensity, // 光强
+    intensity: lightObj.DirectionalLight.lightInstance.intensity, // 光强
     color: 0x444444, // 光颜色
   };
   guiD
     .add(durectuibak, 'intensity', 0, 500, 0.01)
     .name('强度')
     .onChange((val: number) => {
-      lightInstance.DirectionalLight.lightInstance.intensity = val;
+      lightObj.DirectionalLight.lightInstance.intensity = val;
     });
   guiD
     .addColor(durectuibak, 'color')
     .listen()
     .name('颜色')
     .onChange((val: number) => {
-      lightInstance.DirectionalLight.lightInstance.color = new THREE.Color(val);
+      lightObj.DirectionalLight.lightInstance.color = new THREE.Color(val);
+      lightObj.DirectionalLight.lightHelper.update();
     });
 
   const guiH = gui.addFolder('半球光参数').close();
   const hemisphere = {
-    intensity: lightInstance.HemisphereLight.lightInstance.intensity, // 光强
+    intensity: lightObj.HemisphereLight.lightInstance.intensity, // 光强
     color: 0x444444, // 天空中发出光线的颜色
     groundColor: 0x444444, // 地面发出光线的颜色
   };
@@ -212,28 +212,28 @@ function addGUI() {
     .add(hemisphere, 'intensity', 0, 500, 0.01)
     .name('强度')
     .onChange((val: number) => {
-      lightInstance.HemisphereLight.lightInstance.intensity = val;
+      lightObj.HemisphereLight.lightInstance.intensity = val;
     });
   guiH
     .addColor(hemisphere, 'color')
     .listen()
     .name('天空颜色')
     .onChange((val: number) => {
-      lightInstance.HemisphereLight.lightInstance.color = new THREE.Color(val);
+      lightObj.HemisphereLight.lightInstance.color = new THREE.Color(val);
+      lightObj.HemisphereLight.lightHelper.update();
     });
   guiH
     .addColor(hemisphere, 'groundColor')
     .listen()
     .name('地面颜色')
     .onChange((val: number) => {
-      lightInstance.HemisphereLight.lightInstance.groundColor = new THREE.Color(
-        val
-      );
+      lightObj.HemisphereLight.lightInstance.groundColor = new THREE.Color(val);
+      lightObj.HemisphereLight.lightHelper.update();
     });
 
   const guiP = gui.addFolder('点光源参数').close();
   const point = {
-    intensity: lightInstance.PointLight.lightInstance.intensity, // 光强
+    intensity: lightObj.PointLight.lightInstance.intensity, // 光强
     color: 0x444444, // 光颜色
     distance: 0,
     decay: 2,
@@ -242,31 +242,32 @@ function addGUI() {
     .add(point, 'intensity', 0, 500, 0.01)
     .name('强度')
     .onChange((val: number) => {
-      lightInstance.PointLight.lightInstance.intensity = val;
+      lightObj.PointLight.lightInstance.intensity = val;
     });
   guiP
     .addColor(point, 'color')
     .listen()
     .name('颜色')
     .onChange((val: number) => {
-      lightInstance.PointLight.lightInstance.color = new THREE.Color(val);
+      lightObj.PointLight.lightInstance.color = new THREE.Color(val);
+      lightObj.PointLight.lightHelper.update();
     });
   guiP
     .add(point, 'distance', 0, 1000, 0.01)
     .name('距离')
     .onChange((val: number) => {
-      lightInstance.PointLight.lightInstance.distance = val;
+      lightObj.PointLight.lightInstance.distance = val;
     });
   guiP
     .add(point, 'decay', 0, 1000, 0.01)
     .name('衰退量')
     .onChange((val: number) => {
-      lightInstance.PointLight.lightInstance.decay = val;
+      lightObj.PointLight.lightInstance.decay = val;
     });
 
   const guiR = gui.addFolder('平面光光源参数').close();
   const rectArea = {
-    intensity: lightInstance.RectAreaLight.lightInstance.intensity, // 光强
+    intensity: lightObj.RectAreaLight.lightInstance.intensity, // 光强
     color: 0x444444, // 光颜色
     width: 10,
     height: 10,
@@ -275,31 +276,31 @@ function addGUI() {
     .add(rectArea, 'intensity', 0, 500, 0.01)
     .name('强度')
     .onChange((val: number) => {
-      lightInstance.RectAreaLight.lightInstance.intensity = val;
+      lightObj.RectAreaLight.lightInstance.intensity = val;
     });
   guiR
     .addColor(rectArea, 'color')
     .listen()
     .name('颜色')
     .onChange((val: number) => {
-      lightInstance.RectAreaLight.lightInstance.color = new THREE.Color(val);
+      lightObj.RectAreaLight.lightInstance.color = new THREE.Color(val);
     });
   guiR
     .add(rectArea, 'width', 0, 1000, 0.01)
     .name('宽度')
     .onChange((val: number) => {
-      lightInstance.RectAreaLight.lightInstance.width = val;
+      lightObj.RectAreaLight.lightInstance.width = val;
     });
   guiR
     .add(rectArea, 'height', 0, 1000, 0.01)
     .name('高度')
     .onChange((val: number) => {
-      lightInstance.RectAreaLight.lightInstance.height = val;
+      lightObj.RectAreaLight.lightInstance.height = val;
     });
 
   const guiS = gui.addFolder('聚光灯参数').close();
   const spot = {
-    intensity: lightInstance.SpotLight.lightInstance.intensity, // 光强
+    intensity: lightObj.SpotLight.lightInstance.intensity, // 光强
     color: 0x444444, // 光颜色
     distance: 0,
     decay: 2,
@@ -310,39 +311,40 @@ function addGUI() {
     .add(spot, 'intensity', 0, 500, 0.01)
     .name('强度')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.intensity = val;
+      lightObj.SpotLight.lightInstance.intensity = val;
     });
   guiS
     .addColor(spot, 'color')
     .listen()
     .name('颜色')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.color = new THREE.Color(val);
+      lightObj.SpotLight.lightInstance.color = new THREE.Color(val);
+      lightObj.SpotLight.lightHelper.update();
     });
   guiS
     .add(spot, 'distance', 0, 1000, 0.01)
     .name('距离')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.distance = val;
+      lightObj.SpotLight.lightInstance.distance = val;
     });
   guiS
     .add(spot, 'decay', 0, 1000, 0.01)
     .name('衰退量')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.decay = val;
+      lightObj.SpotLight.lightInstance.decay = val;
     });
   guiS
     .add(spot, 'penumbra', 0, 1, 0.01)
     .name('聚光锥半影衰减百分比')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.penumbra = val;
+      lightObj.SpotLight.lightInstance.penumbra = val;
     });
   guiS
     .add(spot, 'angle', 0, Math.PI / 2)
     .name('散射角度')
     .onChange((val: number) => {
-      lightInstance.SpotLight.lightInstance.angle = val;
-      lightInstance.SpotLight.lightHelper.update();
+      lightObj.SpotLight.lightInstance.angle = val;
+      lightObj.SpotLight.lightHelper.update();
     });
 }
 
@@ -359,25 +361,25 @@ function initRender() {
 }
 
 watch(checkedAmbient, (val) => {
-  lightInstance.AmbientLight.lightInstance.intensity = val ? 1 : 0;
+  lightObj.AmbientLight.lightInstance.intensity = val ? 1 : 0;
 });
 watch(light, (val) => {
-  for (const key in lightInstance) {
+  for (const key in lightObj) {
     const indexKey = key as Exclude<
       TLight,
       'AmbientLightProbe' | 'HemisphereLightProbe'
     >;
     if (key !== 'AmbientLight') {
       if (val === indexKey) {
-        lightInstance[indexKey].lightInstance.intensity =
+        lightObj[indexKey].lightInstance.intensity =
           val === 'RectAreaLight' ? 300 : 1;
-        if (lightInstance[indexKey].lightHelper) {
-          lightInstance[indexKey].lightHelper.visible = true;
+        if (lightObj[indexKey].lightHelper) {
+          lightObj[indexKey].lightHelper.visible = true;
         }
       } else {
-        lightInstance[indexKey].lightInstance.intensity = 0;
-        if (lightInstance[indexKey].lightHelper) {
-          lightInstance[indexKey].lightHelper.visible = false;
+        lightObj[indexKey].lightInstance.intensity = 0;
+        if (lightObj[indexKey].lightHelper) {
+          lightObj[indexKey].lightHelper.visible = false;
         }
       }
     }

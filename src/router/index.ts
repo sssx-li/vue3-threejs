@@ -50,6 +50,12 @@ const routes: Array<RouteRecordRaw> = [
                 meta: { title: '几何体2' },
                 component: () => import('@/views/base/geometry/secound.vue'),
               },
+              {
+                path: '/base/geometry/buffer',
+                name: 'geometryBuffer',
+                meta: { title: 'bufferGeometry' },
+                component: () => import('@/views/base/geometry/buffer.vue'),
+              },
             ],
           },
           {
@@ -70,6 +76,18 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '灯光', icon: 'form' },
             component: () => import('@/views/base/light/index.vue'),
           },
+          {
+            path: '/senior/material',
+            name: 'material',
+            meta: { title: '材质', icon: 'form' },
+            component: () => import('@/views/base/material/index.vue'),
+          },
+          {
+            path: '/senior/shadow',
+            name: 'shadow',
+            meta: { title: '阴影', icon: 'form' },
+            component: () => import('@/views/base/shadow/index.vue'),
+          },
         ],
       },
       {
@@ -77,12 +95,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'senior',
         meta: { title: '高级', icon: 'form' },
         children: [
-          {
-            path: '/senior/controls',
-            name: 'controls',
-            meta: { title: '控制器', icon: 'form' },
-            component: () => import('@/views/senior/controls/index.vue'),
-          },
           {
             path: '/senior/loader',
             name: 'loader',
@@ -94,18 +106,6 @@ const routes: Array<RouteRecordRaw> = [
             name: 'manager',
             meta: { title: '管理器', icon: 'form' },
             component: () => import('@/views/senior/manager/index.vue'),
-          },
-          {
-            path: '/senior/material',
-            name: 'material',
-            meta: { title: '材质', icon: 'form' },
-            component: () => import('@/views/senior/material/index.vue'),
-          },
-          {
-            path: '/senior/shadow',
-            name: 'shadow',
-            meta: { title: '阴影', icon: 'form' },
-            component: () => import('@/views/senior/shadow/index.vue'),
           },
           {
             path: '/senior/texture',

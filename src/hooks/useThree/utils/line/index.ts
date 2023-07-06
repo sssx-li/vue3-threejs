@@ -13,7 +13,7 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
   params: ILine<T>
 ) {
   const {
-    type = 'LineBasicMaterial' as T,
+    type = 'LineBasicMaterial',
     points = [],
     options = {},
     useLine2 = false,

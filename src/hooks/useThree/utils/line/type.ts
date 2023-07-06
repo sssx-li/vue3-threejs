@@ -19,7 +19,7 @@ export interface ILine2 extends Partial<IWH> {
 }
 
 export interface ILine<T extends TLineMaterial = 'LineBasicMaterial'> {
-  type?: TLineMaterial; // 线条材质类型
+  type?: TLineMaterial | T; // 线条材质类型
   points?: IVector['Vector3'][]; // 三维坐标点
   position?: Partial<ICoordinate>; // 线条位移位置
   options?: ILineMaterialOptions[T]; // 材质配置参数
