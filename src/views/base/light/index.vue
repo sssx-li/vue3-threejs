@@ -394,4 +394,3 @@ watch(light, (val) => {
   right: 0;
 }
 </style>
-F

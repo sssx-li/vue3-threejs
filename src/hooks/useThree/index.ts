@@ -74,8 +74,6 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
   };
   // 设置渲染器宽高
   threeState.renderer?.setSize(width!, height!);
-  // 设置渲染器背景颜色及其透明度
-  // threeState.renderer?.setClearColor(0xb9d3ff, 1);
 
   // 辅助对象
   const helperState = reactive<{
