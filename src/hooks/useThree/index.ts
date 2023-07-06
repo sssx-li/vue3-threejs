@@ -23,17 +23,17 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
         axesHelperSize: 10,
       },
     },
-    cameraOptions: { near = 1, far = 1000 },
+    cameraOptions: { near = 0.1, far = 2000 },
     cameraPosition = {},
   } = params;
 
   let camera;
   if (isCameraType<T>('OrthographicCamera', cameraType as TCamera as T)) {
     const {
-      left = 0,
-      right = 0,
-      top = 0,
-      bottom = 0,
+      left = -1,
+      right = 1,
+      top = 1,
+      bottom = -1,
     } = params.cameraOptions as ICameraType['OrthographicCamera']['options'];
     /**
      * 透视相机
@@ -50,7 +50,7 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
      */
     camera = new THREE.OrthographicCamera(left, right, top, bottom, near, far);
   } else {
-    const { fov = 0, aspect = 0 } =
+    const { fov = 50, aspect = 1 } =
       params.cameraOptions as ICameraType['PerspectiveCamera']['options'];
     /**
      * 透视相机
