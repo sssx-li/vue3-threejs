@@ -1,7 +1,7 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.精灵-Sprite </template>
-    <div id="base-sprite"></div>
+    <template #header> 1.组-Group </template>
+    <div id="base-group"></div>
   </el-card>
 </template>
 
@@ -9,13 +9,13 @@
 import { useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-sprite',
+  name: 'base-group',
   inheritAttrs: false,
 });
 
 const width = 400;
 const height = 400;
-const { threeState, THREE } = useThree('base-sprite', {
+const { threeState, THREE } = useThree('base-group', {
   config: {
     width,
     height,
@@ -38,26 +38,27 @@ const { threeState, THREE } = useThree('base-sprite', {
   cameraPosition: { x: 350, y: 350, z: 350 },
 });
 
-function addSprite() {
+function addSprites() {
   const material = new THREE.SpriteMaterial({
-    color: 0xff0000,
+    // color: 0xff0000,
+    map: new THREE.TextureLoader().load('/src/assets/imgs/snow.png'),
   });
-  // 精灵是一个总是面朝着摄像机的平面，通常含有使用一个半透明的纹理。
-  const sprite = new THREE.Sprite(material);
-  sprite.scale.set(30, 30, 1);
-  threeState.scene?.add(sprite);
+  const group = new THREE.Group();
+  group.name = '精灵';
+  for (let i = 0; i <= 10; i++) {
+    const sprite = new THREE.Sprite(material);
+    sprite.scale.set(20, 20, 1);
+    sprite.position.set(
+      Math.random() * 150 + 10,
+      Math.random() * 150 + 10,
+      Math.random() * 50 + 10
+    );
+    group.add(sprite);
+  }
+  threeState.scene?.add(group);
+  console.log(group.children);
 }
 
-function addSnow() {
-  const material = new THREE.SpriteMaterial({
-    map: new THREE.TextureLoader().load('/src/assets/imgs/snow.png'),
-    rotation: Math.PI / 2,
-  });
-  const sprite = new THREE.Sprite(material);
-  sprite.scale.set(30, 30, 1);
-  sprite.position.set(50, 50, 1);
-  threeState.scene?.add(sprite);
-}
 function addLight() {
   // 点光源
   const point = new THREE.PointLight(0xffffff);
@@ -74,8 +75,7 @@ function render() {
 }
 
 onMounted(() => {
-  addSprite();
-  addSnow();
+  addSprites();
   addLight();
   render();
 });
