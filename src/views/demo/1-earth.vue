@@ -1,8 +1,5 @@
 <template>
-  <el-card class="mr-14px mb-14px">
-    <template #header> 1.旋转的地球 </template>
-    <div id="demo-earth"></div>
-  </el-card>
+  <div id="demo-earth"></div>
 </template>
 
 <script setup lang="ts">
@@ -14,13 +11,14 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const width = 400;
-const height = 400;
-const { threeState, THREE } = useThree('demo-earth', {
+const width = window.innerWidth - 290;
+const height = window.innerHeight - 100;
+const { threeState, THREE, stats } = useThree('demo-earth', {
   config: {
     width,
     height,
     cameraType: 'PerspectiveCamera',
+    enableStats: true,
     renderOptions: {
       antialias: true,
     },
@@ -33,9 +31,8 @@ const { threeState, THREE } = useThree('demo-earth', {
   },
   cameraPosition: { x: 150, y: 150, z: 150 },
 });
-
 let earth;
-function addGeometry() {
+function addEarth() {
   const geometry = new THREE.SphereGeometry(80, 32, 32);
   const material = new THREE.MeshPhongMaterial({
     map: new THREE.TextureLoader().load('/src/assets/imgs/earth.jpg'),
@@ -43,6 +40,7 @@ function addGeometry() {
   earth = new Mesh(geometry, material);
   threeState.scene?.add(earth);
 }
+
 function addLight() {
   // 点光源
   const point = new THREE.PointLight(0xffffff);
@@ -58,11 +56,12 @@ function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
   // 旋转
   earth!.rotation.y += 0.002;
+  stats.value?.update();
   requestAnimationFrame(render);
 }
 
 onMounted(() => {
-  addGeometry();
+  addEarth();
   addLight();
   render();
 });

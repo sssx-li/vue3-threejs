@@ -169,7 +169,21 @@ const routes: Array<RouteRecordRaw> = [
         path: '/demo',
         name: 'demo',
         meta: { title: '案例', icon: 'form' },
-        component: () => import('@/views/demo/index.vue'),
+        redirect: '/demo/earth',
+        children: [
+          {
+            path: '/demo/earth',
+            name: 'demoEarth',
+            meta: { title: '地球' },
+            component: () => import('@/views/demo/1-earth.vue'),
+          },
+          {
+            path: '/demo/snow',
+            name: 'demoSnow',
+            meta: { title: '雪花' },
+            component: () => import('@/views/demo/2-snow.vue'),
+          },
+        ],
       },
     ],
   },
