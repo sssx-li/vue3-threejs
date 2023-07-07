@@ -43,10 +43,9 @@ const { threeState, THREE } = useThree('base-buffer', {
     far: 1000,
   },
   cameraPosition: { x: 100, y: 100, z: 100 },
-  renderFn: initRender,
 });
 let point, mesh, line, lineLoop, lineSegments;
-function initGeometry() {
+function addGeometry() {
   const geometry = new THREE.BufferGeometry();
   //创建顶点数据
   const vertices = new Float32Array([
@@ -269,13 +268,13 @@ watch(material, (val) => {
   mesh!.visible = val === 'mesh';
 });
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addIndexGeometry();
   addNormalGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

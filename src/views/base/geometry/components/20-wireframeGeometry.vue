@@ -37,12 +37,11 @@ const { threeState, THREE } = useThree('base-wireframeGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let line;
 
-function initGeometry() {
+function addGeometry() {
   /**
    * 网格几何体
    WireframeGeometry( geometry : BufferGeometry )
@@ -89,11 +88,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

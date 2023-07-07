@@ -36,11 +36,10 @@ const { threeState, THREE } = useThree('base-cylinderGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let mesh, mesh1;
-function initGeometry() {
+function addGeometry() {
   /**
    * 圆柱缓冲几何体
    CylinderGeometry(radiusTop : Float, radiusBottom : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float)
@@ -93,11 +92,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

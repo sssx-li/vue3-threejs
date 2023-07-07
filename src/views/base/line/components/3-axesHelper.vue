@@ -37,10 +37,9 @@ const { threeState } = useThree('base-axeshelper', {
     far: 1000,
   },
   cameraPosition: { x: 100, y: 100, z: 200 },
-  renderFn: initRender,
 });
 // 实线
-function initLine() {
+function addLine() {
   const { lineInstance } = cereateLine({
     useLine2: true,
     line2Options: {
@@ -73,7 +72,7 @@ function initLine() {
   threeState.scene?.add(reactLine);
 }
 // 虚线
-function initDashedLine() {
+function addDashedLine() {
   const { lineInstance } = cereateLine({
     type: 'LineDashedMaterial',
     points: [
@@ -112,9 +111,9 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initLine();
-  initDashedLine();
+onMounted(() => {
+  addLine();
+  addDashedLine();
   const { lineInstance } = cereateLine({
     type: 'LineDashedMaterial',
     useLine2: true,
@@ -133,7 +132,7 @@ function initRender() {
   });
   threeState.scene?.add(lineInstance);
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

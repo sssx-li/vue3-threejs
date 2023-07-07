@@ -69,6 +69,7 @@ export interface IConfig<T extends TCamera = 'OrthographicCamera'>
   renderOptions?: WebGLRendererParameters; // 渲染器
   enableControl?: boolean; // 是否启用轨道控制器, 默认为true
   enableAxesHelper?: boolean; // 是否启用坐标辅助线, 默认为false
+  enableStats?: boolean; // 帧率检测器
   helperConfig?: IHelper;
 }
 
@@ -81,5 +82,4 @@ export interface IThree<T extends TCamera = 'OrthographicCamera'> {
   config: Omit<IConfig<T>, 'camera' | 'scene'>;
   cameraOptions: ICameraType[T]['options']; // 相机配置参数
   cameraPosition?: Partial<ICoordinate>; // 相机位移位置
-  renderFn?: () => void; // 渲染方法
 }

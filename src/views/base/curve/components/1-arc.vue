@@ -33,10 +33,9 @@ const { threeState } = useThree('base-curve', {
     far: 1000,
   },
   cameraPosition: { x: 100, y: 100, z: 200 },
-  renderFn: initRender,
 });
 
-function initCCurve() {
+function addCurve() {
   // 实线
   const { curveInstance } = createCurve('ArcCurve', {
     options: {
@@ -75,10 +74,10 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initCCurve();
+onMounted(() => {
+  addCurve();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

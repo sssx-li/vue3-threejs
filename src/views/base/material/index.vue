@@ -112,7 +112,6 @@ const { threeState, THREE } = useThree('base-material', {
     bottom: -height / 2,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 function addPlane() {
   const geometry = new THREE.PlaneGeometry(800, 800);
@@ -125,7 +124,7 @@ function addPlane() {
   threeState.scene?.add(mesh);
 }
 let mesh;
-function initGeometry() {
+function addGeometry() {
   const geometry = new THREE.BoxGeometry(100, 100, 100);
   // MeshLambertMaterial：一种非光泽表面的材质，没有镜面高光。
   const material = new THREE.MeshLambertMaterial();
@@ -153,16 +152,16 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
-  addPlane();
-  addLight();
-  render();
-}
 watch([checkedPoint, checkedAmbient], () => {
   console.log(checkedPoint.value);
   point!.intensity = checkedPoint.value ? 1 : 0;
   ambient!.intensity = checkedAmbient.value ? 1 : 0;
+});
+onMounted(() => {
+  addGeometry();
+  addPlane();
+  addLight();
+  render();
 });
 </script>
 

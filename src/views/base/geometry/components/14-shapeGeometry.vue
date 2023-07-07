@@ -36,11 +36,10 @@ const { threeState, THREE } = useThree('base-shapeGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let mesh;
-function initGeometry() {
+function addGeometry() {
   /**
    * 形状缓冲几何体
    ShapeGeometry(shapes : Array, curveSegments : Integer)
@@ -86,11 +85,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

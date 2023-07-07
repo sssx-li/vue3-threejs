@@ -45,7 +45,6 @@ const { threeState, THREE, helperState } = useThree('base-camera', {
     far: 1000,
   },
   cameraPosition: { x: 500, y: 500, z: 500 },
-  renderFn: initRender,
 });
 
 const cameraP = new THREE.PerspectiveCamera(60, width / height, 1, 1000);
@@ -158,14 +157,6 @@ function render() {
   );
   requestAnimationFrame(render);
 }
-
-function initRender() {
-  initGeometry();
-  addLight();
-  addGUI();
-  addHelper();
-  render();
-}
 watch(camera, (val) => {
   // 更新相机对象
   helperState.controlInstance!.object =
@@ -174,6 +165,14 @@ watch(camera, (val) => {
   const isO = val === 'OrthographicCamera';
   helperP!.visible = !isO;
   helper!.visible = isO;
+});
+
+onMounted(() => {
+  initGeometry();
+  addLight();
+  addGUI();
+  addHelper();
+  render();
 });
 </script>
 

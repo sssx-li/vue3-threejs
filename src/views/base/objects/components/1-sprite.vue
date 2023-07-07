@@ -1,22 +1,21 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 6.边缘几何体-EdgesGeometry </template>
-    <div id="base-edgesGeometry"></div>
+    <template #header> 1.精灵-Sprite </template>
+    <div id="base-sprite"></div>
   </el-card>
 </template>
 
 <script setup lang="ts">
 import { useThree } from '@/hooks';
-import { createLineMateral } from '@/hooks/useThree/utils/line/utils';
 
 defineOptions({
-  name: 'base-edgesGeometry',
+  name: 'base-sprite',
   inheritAttrs: false,
 });
 
 const width = 400;
 const height = 400;
-const { threeState, THREE } = useThree('base-edgesGeometry', {
+const { threeState, THREE } = useThree('base-sprite', {
   config: {
     width,
     height,
@@ -39,24 +38,14 @@ const { threeState, THREE } = useThree('base-edgesGeometry', {
   cameraPosition: { x: 350, y: 350, z: 350 },
 });
 
-let line;
-function addGeometry() {
-  /**
-   * 边缘几何体
-   EdgesGeometry( geometry : BufferGeometry, thresholdAngle : Integer )
-      geometry — 任何一个几何体对象。
-      thresholdAngle — 仅当相邻面的法线之间的角度（单位为角度）超过这个值时，才会渲染边缘。默认值为1。
-   */
-  const geometry = new THREE.BoxGeometry(50, 50, 50);
-  const edges = new THREE.EdgesGeometry(geometry);
-  // MeshLambertMaterial：一种非光泽表面的材质，没有镜面高光。
-  line = new THREE.LineSegments(
-    edges,
-    createLineMateral('LineBasicMaterial', {
-      color: '#f60',
-    })
-  );
-  threeState.scene?.add(line);
+function addSprite() {
+  const material = new THREE.SpriteMaterial({
+    color: 0xff0000,
+  });
+  // 精灵是一个总是面朝着摄像机的平面，通常含有使用一个半透明的纹理。
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(30, 30, 1);
+  threeState.scene?.add(sprite);
 }
 function addLight() {
   // 点光源
@@ -70,14 +59,11 @@ function addLight() {
 
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
-  line!.rotation.x += 0.01;
-  line!.rotation.y += 0.01;
-
   requestAnimationFrame(render);
 }
 
 onMounted(() => {
-  addGeometry();
+  addSprite();
   addLight();
   render();
 });

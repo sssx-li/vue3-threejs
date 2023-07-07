@@ -32,11 +32,10 @@ const { threeState, THREE } = useThree('demo-earth', {
     far: 10000,
   },
   cameraPosition: { x: 150, y: 150, z: 150 },
-  renderFn: initRender,
 });
 
 let earth;
-function initGeometry() {
+function addGeometry() {
   const geometry = new THREE.SphereGeometry(80, 32, 32);
   const material = new THREE.MeshPhongMaterial({
     map: new THREE.TextureLoader().load('/src/assets/imgs/earth.jpg'),
@@ -62,11 +61,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

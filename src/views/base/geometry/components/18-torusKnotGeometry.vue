@@ -36,11 +36,10 @@ const { threeState, THREE } = useThree('base-torusKnotGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let mesh, mesh1;
-function initGeometry() {
+function addGeometry() {
   /**
    * 圆环缓冲扭结几何体
    TorusKnotGeometry(radius : Float, tube : Float, tubularSegments : Integer, radialSegments : Integer, p : Integer, q : Integer)
@@ -88,11 +87,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

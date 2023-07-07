@@ -39,11 +39,12 @@ const light =
 
 const width = 800;
 const height = 700;
-const { threeState, THREE } = useThree('base-light', {
+const { threeState, THREE, stats } = useThree('base-light', {
   config: {
     width,
     height,
     enableAxesHelper: true,
+    enableStats: true,
     helperConfig: {
       axesHelperSize: 350,
     },
@@ -60,10 +61,9 @@ const { threeState, THREE } = useThree('base-light', {
     far: 10000,
   },
   cameraPosition: { x: 500, y: 500, z: 500 },
-  renderFn: initRender,
 });
 
-function initGeometry() {
+function addGeometry() {
   const geometry = new THREE.BoxGeometry(100, 100, 100);
   const material = new THREE.MeshLambertMaterial();
   const mesh = new THREE.Mesh(geometry, material);
@@ -152,7 +152,17 @@ function addLight() {
   createLightFn('PointLight', true);
 
   // 平面光光源
-  createLightFn('RectAreaLight', true);
+  createLightFn('RectAreaLight', true, {
+    options: {
+      intensity: 0,
+      width: 100,
+      height: 100,
+    },
+    helperConfig: {
+      hidden: true,
+    },
+    position: { x: 100, y: 300, z: 150 },
+  });
   lightObj.RectAreaLight.lightInstance.lookAt(160, 0, 160);
 
   // 聚光灯
@@ -351,14 +361,15 @@ function addGUI() {
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
   requestAnimationFrame(render);
+  stats.value!.update();
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   addGUI();
   render();
-}
+});
 
 watch(checkedAmbient, (val) => {
   lightObj.AmbientLight.lightInstance.intensity = val ? 1 : 0;

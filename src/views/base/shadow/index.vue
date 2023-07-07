@@ -36,7 +36,6 @@ const { threeState, THREE } = useThree('base-shadow', {
     y: 200,
     z: 200,
   },
-  renderFn: initRender,
 });
 
 function addPlane() {
@@ -141,7 +140,7 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
+onMounted(() => {
   // 4. 渲染器显示阴影设置为enabled = true 允许在场景中使用阴影贴图
   // 必须要在其它材质渲染前设置，否则不生效
   threeState.renderer.shadowMap.enabled = true;
@@ -150,7 +149,7 @@ function initRender() {
   addLight();
   addGUI();
   render();
-}
+});
 </script>
 
 <style lang="scss">

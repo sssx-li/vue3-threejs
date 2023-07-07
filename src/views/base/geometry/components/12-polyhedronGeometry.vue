@@ -36,11 +36,10 @@ const { threeState, THREE } = useThree('base-polyhedronGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let mesh, mesh1;
-function initGeometry() {
+function addGeometry() {
   /**
    * 多面缓冲几何体
    PolyhedronGeometry(vertices : Array, indices : Array, radius : Float, detail : Integer)
@@ -100,11 +99,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

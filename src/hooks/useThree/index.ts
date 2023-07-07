@@ -4,6 +4,9 @@ import * as THREE from 'three';
 // 轨道控制器(视觉控制器)
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+// 帧率检测
+import Stats from 'three/examples/jsm/libs/stats.module.js';
+
 import { ICameraType, IThree, IThreeState, TCamera } from './type';
 import { isCameraType } from './utils';
 
@@ -19,6 +22,7 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
       renderOptions = {},
       enableControl = true,
       enableAxesHelper = false,
+      enableStats = false,
       helperConfig = {
         axesHelperSize: 10,
       },
@@ -72,6 +76,7 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
     camera,
     renderer: new THREE.WebGLRenderer(renderOptions),
   };
+  const stats = ref<Stats>(); // 帧率检测
   // 设置渲染器宽高
   threeState.renderer?.setSize(width!, height!);
 
@@ -83,7 +88,8 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
 
   // 渲染函数
   onMounted(() => {
-    document.getElementById(id)?.appendChild(threeState.renderer!.domElement);
+    const renderDom = document.getElementById(id);
+    renderDom?.appendChild(threeState.renderer!.domElement);
     // 轨道(视觉控制器)
     if (enableControl) {
       helperState.controlInstance = new OrbitControls(
@@ -98,6 +104,10 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
       );
       threeState.scene?.add(toRaw(helperState.axesHelperInstance));
     }
+    if (enableStats) {
+      stats.value = new Stats();
+      renderDom?.appendChild(stats.value.dom);
+    }
     // 设置相机位置
     threeState.camera?.position.set(
       cameraPosition.x || 0,
@@ -105,13 +115,13 @@ export function useThree<T extends TCamera = 'OrthographicCamera'>(
       cameraPosition.z || 0
     );
     threeState.camera?.lookAt(threeState.scene!.position);
-    params.renderFn && params.renderFn();
   });
   return {
     THREE,
     OrbitControls,
 
     threeState,
+    stats,
     helperState,
   };
 }

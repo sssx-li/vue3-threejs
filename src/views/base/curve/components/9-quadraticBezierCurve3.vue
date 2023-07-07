@@ -33,10 +33,9 @@ const { threeState } = useThree('base-quadraticBezierCurve3', {
     far: 1000,
   },
   cameraPosition: { x: 100, y: 100, z: 200 },
-  renderFn: initRender,
 });
 
-function initCatmullRom() {
+function addCurve() {
   const { curveInstance } = createCurve('QuadraticBezierCurve3', {
     options: {
       v0: [100, 0, 0],
@@ -73,10 +72,10 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initCatmullRom();
+onMounted(() => {
+  addCurve();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

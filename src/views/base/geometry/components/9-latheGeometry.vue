@@ -36,11 +36,10 @@ const { threeState, THREE } = useThree('base-latheGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
 let mesh, mesh1;
-function initGeometry() {
+function addGeometry() {
   /**
    * 车削缓冲几何体
    LatheGeometry(points : Array, segments : Integer, phiStart : Float, phiLength : Float)
@@ -91,11 +90,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>

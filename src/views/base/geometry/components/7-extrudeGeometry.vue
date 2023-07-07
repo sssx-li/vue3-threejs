@@ -36,10 +36,9 @@ const { threeState, THREE } = useThree('base-extrudeGeometry', {
     far: 1000,
   },
   cameraPosition: { x: 350, y: 350, z: 350 },
-  renderFn: initRender,
 });
 
-function initGeometry() {
+function addGeometry() {
   const length = 60,
     width = 40;
   const shape = new THREE.Shape();
@@ -98,11 +97,11 @@ function render() {
   requestAnimationFrame(render);
 }
 
-function initRender() {
-  initGeometry();
+onMounted(() => {
+  addGeometry();
   addLight();
   render();
-}
+});
 </script>
 
 <style lang="scss" scoped></style>
