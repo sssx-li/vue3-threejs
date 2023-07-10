@@ -124,8 +124,7 @@ function addHalo() {
 const waterWaveTexture = new THREE.TextureLoader().load(
   '/src/assets/imgs/water-wave.png'
 );
-// waterWaveTexture.wrapT = THREE.MirroredRepeatWrapping;
-waterWaveTexture.wrapS = THREE.MirroredRepeatWrapping;
+waterWaveTexture.wrapS = THREE.RepeatWrapping;
 function addWaterWave() {
   const geometry = new THREE.PlaneGeometry(150, 150).rotateX(-Math.PI / 2);
   const material = new THREE.MeshBasicMaterial({

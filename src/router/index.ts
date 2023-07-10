@@ -94,6 +94,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '纹理', icon: 'form' },
             component: () => import('@/views/base/texture/index.vue'),
           },
+          {
+            path: '/base/loader',
+            name: 'loader',
+            meta: { title: '加载器', icon: 'form' },
+            component: () => import('@/views/base/loader/index.vue'),
+          },
         ],
       },
       {
@@ -101,12 +107,6 @@ const routes: Array<RouteRecordRaw> = [
         name: 'senior',
         meta: { title: '高级', icon: 'form' },
         children: [
-          {
-            path: '/senior/loader',
-            name: 'loader',
-            meta: { title: '加载器', icon: 'form' },
-            component: () => import('@/views/senior/loader/index.vue'),
-          },
           {
             path: '/senior/manager',
             name: 'manager',
@@ -182,6 +182,12 @@ const routes: Array<RouteRecordRaw> = [
             name: 'demoSnow',
             meta: { title: '雪花' },
             component: () => import('@/views/demo/2-snow.vue'),
+          },
+          {
+            path: '/demo/shoe',
+            name: 'demoShoe',
+            meta: { title: '鞋' },
+            component: () => import('@/views/demo/3-shoe.vue'),
           },
         ],
       },
