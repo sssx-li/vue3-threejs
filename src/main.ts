@@ -6,7 +6,6 @@ import './styles/index.scss';
 // 暗黑主题部分样式
 import 'element-plus/theme-chalk/dark/css-vars.css';
 
-// import router from './permission';
 import router from './router';
 import store from './store';
 import directives from './directives';

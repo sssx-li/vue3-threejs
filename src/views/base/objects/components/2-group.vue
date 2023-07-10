@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.组-Group </template>
+    <template #header> 2.组-Group </template>
     <div id="base-group"></div>
   </el-card>
 </template>

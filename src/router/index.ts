@@ -88,6 +88,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '阴影', icon: 'form' },
             component: () => import('@/views/base/shadow/index.vue'),
           },
+          {
+            path: '/senior/texture',
+            name: 'texture',
+            meta: { title: '纹理', icon: 'form' },
+            component: () => import('@/views/base/texture/index.vue'),
+          },
         ],
       },
       {
@@ -106,12 +112,6 @@ const routes: Array<RouteRecordRaw> = [
             name: 'manager',
             meta: { title: '管理器', icon: 'form' },
             component: () => import('@/views/senior/manager/index.vue'),
-          },
-          {
-            path: '/senior/texture',
-            name: 'texture',
-            meta: { title: '纹理贴图', icon: 'form' },
-            component: () => import('@/views/senior/texture/index.vue'),
           },
         ],
       },
