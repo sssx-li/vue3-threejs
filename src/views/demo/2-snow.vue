@@ -12,7 +12,7 @@ defineOptions({
 
 const width = window.innerWidth - 290;
 const height = window.innerHeight - 100;
-const { threeState, THREE, stats } = useThree('demo-snow', {
+const { threeState, THREE, stats, helperState } = useThree('demo-snow', {
   config: {
     width,
     height,
@@ -75,6 +75,10 @@ function addLight() {
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
   stats.value?.update();
+  helperState.controlInstance!.addEventListener('change', () => {
+    helperState.controlInstance!.minDistance = 400; // 离中心物体的最近距离
+    helperState.controlInstance!.maxDistance = 1200; // 离中心物体的最远距离
+  });
   requestAnimationFrame(render);
 }
 

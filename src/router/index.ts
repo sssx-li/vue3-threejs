@@ -157,6 +157,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '鞋' },
             component: () => import('@/views/demo/3-shoe.vue'),
           },
+          {
+            path: '/demo/building',
+            name: 'demoBuilding',
+            meta: { title: '包围盒-立方纹理' },
+            component: () => import('@/views/demo/4-building.vue'),
+          },
         ],
       },
     ],

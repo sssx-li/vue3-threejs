@@ -80,6 +80,10 @@ watch(typeModel, (val) => {
 onMounted(() => {
   addShoe();
   addLight();
+  helperState.controlInstance!.addEventListener('change', () => {
+    helperState.controlInstance!.minDistance = 100;
+    helperState.controlInstance!.maxDistance = 500;
+  });
   render();
 });
 </script>
