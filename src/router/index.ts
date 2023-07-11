@@ -103,19 +103,6 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
-        path: '/senior',
-        name: 'senior',
-        meta: { title: '高级', icon: 'form' },
-        children: [
-          {
-            path: '/senior/manager',
-            name: 'manager',
-            meta: { title: '管理器', icon: 'form' },
-            component: () => import('@/views/senior/manager/index.vue'),
-          },
-        ],
-      },
-      {
         path: '/advanced',
         name: 'advanced',
         meta: { title: '进阶', icon: 'form' },
@@ -143,25 +130,6 @@ const routes: Array<RouteRecordRaw> = [
             name: 'audio',
             meta: { title: '音频', icon: 'form' },
             component: () => import('@/views/advanced/audio/index.vue'),
-          },
-        ],
-      },
-      {
-        path: '/helper',
-        name: 'helper',
-        meta: { title: '辅助', icon: 'form' },
-        children: [
-          {
-            path: '/helper/helperObject',
-            name: 'helperObject',
-            meta: { title: '辅助对象', icon: 'form' },
-            component: () => import('@/views/helper/helperObject/index.vue'),
-          },
-          {
-            path: '/helper/gui',
-            name: 'gui',
-            meta: { title: 'Gui', icon: 'form' },
-            component: () => import('@/views/helper/gui/index.vue'),
           },
         ],
       },

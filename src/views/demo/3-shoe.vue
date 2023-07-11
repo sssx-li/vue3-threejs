@@ -2,7 +2,7 @@
   <div class="shoe-container relative">
     <div id="demo-shoe"></div>
     <el-radio-group v-model="typeModel" class="absolute bottom-10px left-20px">
-      <el-radio label="diffuseMidnight" size="large">弥漫午夜</el-radio>
+      <el-radio label="diffuseMidnight" size="large">浪漫午夜</el-radio>
       <el-radio label="diffuseStreet" size="large">漫游街道</el-radio>
       <el-radio label="diffuseBeach" size="large">海滩漫步</el-radio>
     </el-radio-group>
@@ -41,7 +41,7 @@ const { threeState, THREE, helperState } = useThree('demo-shoe', {
 });
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
-let model, point;
+let model: any, point;
 loader.setDRACOLoader(dracoLoader);
 function addShoe() {
   loader.load('/src/assets/models/glTF/MaterialsVariantsShoe.gltf', (gltf) => {
@@ -62,6 +62,9 @@ function addLight() {
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
   helperState.controlInstance?.update();
+  if (model) {
+    model.rotation.y -= 0.001;
+  }
   // 灯光跟随相机
   point!.position.copy(threeState.camera?.position);
   requestAnimationFrame(render);

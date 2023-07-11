@@ -14,8 +14,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const width = 600;
-const height = 600;
+const width = 400;
+const height = 400;
 const { threeState, THREE } = useThree('base-loading', {
   config: {
     width,
@@ -103,7 +103,7 @@ function addGlbModel() {
   glbLoader.load('Parrot.glb', (parrot) => {
     const model = parrot.scene;
     model.scale.setScalar(4);
-    model.position.set(50, 150, 50);
+    model.position.set(50, 100, 50);
     model.rotateY(Math.PI / 4);
     threeState.scene?.add(model);
   });
