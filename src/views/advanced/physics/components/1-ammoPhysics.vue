@@ -6,48 +6,87 @@
 </template>
 
 <script setup lang="ts">
-import { useThree } from '@/hooks';
-import AmmoPhysics from 'three/examples/jsm/physics/AmmoPhysics';
+import { createLight, useThree } from '@/hooks';
+import { AmmoPhysics } from 'three/examples/jsm/physics/AmmoPhysics';
 
 defineOptions({
   name: 'advance-ammoPhysiscs',
   inheritAttrs: false,
 });
-
 const width = 400;
 const height = 400;
 const { threeState, THREE } = useThree('advance-ammoPhysiscs', {
   config: {
     width,
     height,
+    cameraType: 'PerspectiveCamera',
     enableAxesHelper: true,
     helperConfig: {
-      axesHelperSize: 200,
+      axesHelperSize: 2,
     },
     renderOptions: {
       antialias: true,
     },
   },
   cameraOptions: {
-    left: -width / 2,
-    right: width / 2,
-    top: height / 2,
-    bottom: -height / 2,
-    near: 1,
+    fov: 60,
+    aspect: width / height,
+    near: 0.1,
     far: 1000,
   },
-  cameraPosition: { x: 350, y: 350, z: 350 },
+  cameraPosition: { x: 5, y: 5, z: 5 },
 });
 
-function addGeometry() {}
+let plane;
+function addPlane() {
+  const geometry = new THREE.BoxGeometry(10, 1, 10);
+  const material = new THREE.ShadowMaterial({ color: 0x111111 });
+  plane = new THREE.Mesh(geometry, material);
+  plane.position.set(0, -1, 0);
+  threeState.scene?.add(plane);
+}
+
+let ball;
+function addGeometry() {
+  const geometry = new THREE.SphereGeometry(0.25, 32, 16);
+  const material = new THREE.MeshLambertMaterial();
+  ball = new THREE.Mesh(geometry, material);
+  ball.position.set(0, 2, 0);
+  threeState.scene?.add(ball);
+}
+
+let dirLight: Record<string, any> = {};
 function addLight() {
-  // 点光源
-  const point = new THREE.PointLight(0xffffff);
-  point.position.set(100, 300, 0);
-  threeState.scene?.add(point);
   // 环境光
-  const ambient = new THREE.AmbientLight(0x444444);
-  threeState.scene?.add(ambient);
+  const hemisphere = new THREE.HemisphereLight();
+  hemisphere.intensity = 0.3;
+  threeState.scene?.add(hemisphere);
+
+  // dirLight!.lightInstance = new THREE.DirectionalLight();
+  // dirLight!.lightInstance.position.set(150, 300, -150);
+  // 平行光
+  dirLight = createLight('DirectionalLight', {
+    position: { x: 5, y: 5, z: -5 },
+  });
+  threeState.scene?.add(dirLight!.lightInstance!);
+  threeState.scene?.add(dirLight.lightHelper!);
+}
+
+let physics;
+async function enablePhysics() {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  physics = await AmmoPhysics();
+  physics.addMesh(plane!); //添加一个地面 --（第二个参数不写，表示为刚体）
+  physics.addMesh(ball!, 1);
+}
+
+// 添加阴影
+function enableShadow() {
+  plane!.receiveShadow = true; // 地面接收阴影
+  ball!.castShadow = true; // 物体投射阴影
+  dirLight!.lightInstance.castShadow = true; // 灯光投射阴影
+  threeState.renderer.shadowMap.enabled = true; // 渲染器显示阴影
 }
 
 function render() {
@@ -56,8 +95,12 @@ function render() {
 }
 
 onMounted(() => {
+  threeState.scene!.background = new THREE.Color(0x888888); // 修改场景背景
+  addPlane();
   addGeometry();
   addLight();
+  enableShadow();
+  enablePhysics();
   render();
 });
 </script>
