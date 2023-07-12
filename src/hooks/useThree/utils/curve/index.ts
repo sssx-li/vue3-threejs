@@ -49,7 +49,7 @@ export function createCurve<
         arc.aY || 0,
         arc.aRadius,
         arc.aStartAngle || 0,
-        arc.aEndAngle || 2 * Math.PI,
+        arc.aEndAngle ?? 2 * Math.PI,
         arc.aClockwise
       );
       break;
@@ -85,10 +85,10 @@ export function createCurve<
       curve = new EllipseCurve(
         ellipse.aX || 0,
         ellipse.aY || 0,
-        ellipse.xRadius || 1,
-        ellipse.yRadius || 1,
+        ellipse.xRadius ?? 1,
+        ellipse.yRadius ?? 1,
         ellipse.aStartAngle || 0,
-        ellipse.aEndAngle || 2 * Math.PI,
+        ellipse.aEndAngle ?? 2 * Math.PI,
         ellipse.aClockwise,
         ellipse.aRotation || 0
       );

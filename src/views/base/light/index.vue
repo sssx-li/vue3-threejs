@@ -112,6 +112,7 @@ function createLightFn<T extends TLight = 'AmbientLight'>(
     position: { x: 100, y: 300, z: 150 },
     helperConfig: {
       hidden: true, // 默认不显示该光源辅助对象
+      size: 30,
     },
     options: {
       intensity: 0, // 默认光照强度为0
@@ -138,6 +139,7 @@ function addLight() {
   createLightFn('DirectionalLight', true, {
     helperConfig: {
       hidden: false,
+      size: 30,
     },
     options: {
       intensity: 1, // 默认光照强度为0

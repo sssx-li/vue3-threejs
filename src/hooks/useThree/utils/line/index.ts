@@ -47,8 +47,8 @@ export function cereateLine<T extends TLineMaterial = 'LineBasicMaterial'>(
       dashed: isDashed,
     });
     material.resolution.set(
-      line2Options?.width || window.innerWidth,
-      line2Options?.height || window.innerHeight
+      line2Options.width ?? window.innerWidth,
+      line2Options.height ?? window.innerHeight
     );
     lineInstance = new Line2(geometry, material);
   }

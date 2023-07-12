@@ -27,7 +27,7 @@
     "@iconify-json/ep": "^1.1.11",
     "@types/node": "^18.16.18",
     "@types/nprogress": "^0.2.0",
-    "@types/three": "^0.152.1",
+    "@types/three": "^0.153.0",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "@vitejs/plugin-vue": "^4.2.3",

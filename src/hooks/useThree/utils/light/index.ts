@@ -28,7 +28,7 @@ export function createLight<T extends TLight = 'AmbientLight'>(
   params.helperConfig = {
     hidden: false,
     visible: true,
-    size: 30,
+    size: 1,
     ...params.helperConfig,
   };
   let lightInstance, lightHelper;

@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 import { useThree } from '@/hooks';
-import { Mesh } from 'three';
 
 defineOptions({
   name: 'demo-earth',
@@ -37,7 +36,7 @@ function addEarth() {
   const material = new THREE.MeshPhongMaterial({
     map: new THREE.TextureLoader().load('/src/assets/imgs/earth.jpg'),
   });
-  earth = new Mesh(geometry, material);
+  earth = new THREE.Mesh(geometry, material);
   threeState.scene?.add(earth);
 }
 

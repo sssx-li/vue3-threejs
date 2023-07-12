@@ -142,7 +142,6 @@ function render() {
 
 onMounted(() => {
   // 4. 渲染器显示阴影设置为enabled = true 允许在场景中使用阴影贴图
-  // 必须要在其它材质渲染前设置，否则不生效
   threeState.renderer.shadowMap.enabled = true;
   addPlane();
   addGeometry();

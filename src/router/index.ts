@@ -108,6 +108,12 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: '进阶', icon: 'form' },
         children: [
           {
+            path: '/advanced/physics',
+            name: 'physics',
+            meta: { title: '物理引擎', icon: 'form' },
+            component: () => import('@/views/advanced/physics/index.vue'),
+          },
+          {
             path: '/advanced/text',
             name: 'text',
             meta: { title: '文字', icon: 'form' },
