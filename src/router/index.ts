@@ -89,10 +89,10 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/base/shadow/index.vue'),
           },
           {
-            path: '/senior/texture',
-            name: 'texture',
-            meta: { title: '纹理', icon: 'form' },
-            component: () => import('@/views/base/texture/index.vue'),
+            path: '/senior/raycaster',
+            name: 'raycaster',
+            meta: { title: '射线', icon: 'form' },
+            component: () => import('@/views/base/raycaster/index.vue'),
           },
           {
             path: '/base/loader',
