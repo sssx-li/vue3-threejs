@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px relative">
-    <template #header> 1.文字-CSS3DRenderer </template>
+    <template #header> 2.文字-CSS3DRenderer </template>
     <div id="advanced-css3DRenderer"></div>
   </el-card>
 </template>
@@ -24,22 +24,22 @@ const height = 400;
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-camera.position.set(5, 5, 5);
-
 const renderer = new CSS3DRenderer();
 renderer.setSize(width, height);
 
+const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+camera.position.set(5, 5, 5);
+
 new OrbitControls(camera, renderer.domElement);
 
-function addObj() {
+function addTextObj() {
   const element = document.createElement('span');
   element.innerHTML = 'Hello CSS3D';
   const obj = new CSS3DObject(element);
   obj.position.set(0, 0, 0);
   obj.rotateY(Math.PI / 4);
   obj.rotateX(-Math.PI / 10);
-  obj.scale.setScalar(0.1);
+  obj.scale.setScalar(0.05);
   scene.add(obj);
 }
 
@@ -49,7 +49,7 @@ function render() {
 }
 
 onMounted(() => {
-  addObj();
+  addTextObj();
   render();
   document
     .getElementById('advanced-css3DRenderer')
