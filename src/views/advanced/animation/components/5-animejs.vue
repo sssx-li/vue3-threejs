@@ -16,7 +16,6 @@ defineOptions({
   name: 'advance-animejs',
   inheritAttrs: false,
 });
-const resetBtn = ref<HTMLElement | null>(null);
 const width = 400;
 const height = 400;
 const { threeState, THREE } = useThree('advance-animejs', {
