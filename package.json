@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.2.0",
+    "animejs": "^3.2.1",
     "element-plus": "^2.3.6",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
@@ -25,6 +26,7 @@
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "@iconify-json/ep": "^1.1.11",
+    "@types/animejs": "^3.1.7",
     "@types/node": "^18.16.18",
     "@types/nprogress": "^0.2.0",
     "@types/three": "^0.153.0",

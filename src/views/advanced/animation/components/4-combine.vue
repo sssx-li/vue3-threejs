@@ -1,6 +1,6 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 3.动画混合 </template>
+    <template #header> 4.动画混合 </template>
     <div id="advance-combine"></div>
   </el-card>
 </template>

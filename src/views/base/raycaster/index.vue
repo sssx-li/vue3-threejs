@@ -78,16 +78,16 @@ function addRaycaster() {
     //   1;
 
     // 3. 使用clientY
-    const px = e.clientX - 270;
-    const py = e.clientY - 80;
-    mouse.x = (px / width) * 2 - 1;
-    mouse.y = -(py / height) * 2 + 1;
-
-    // 4. 使用offset
-    // const px = e.offsetX;
-    // const py = e.offsetY;
+    // const px = e.clientX - 270;
+    // const py = e.clientY - 80;
     // mouse.x = (px / width) * 2 - 1;
     // mouse.y = -(py / height) * 2 + 1;
+
+    // 4. 使用offset
+    const px = e.offsetX;
+    const py = e.offsetY;
+    mouse.x = (px / width) * 2 - 1;
+    mouse.y = -(py / height) * 2 + 1;
 
     console.log(mouse);
 

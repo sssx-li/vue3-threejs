@@ -8,6 +8,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.2.0
     version: 10.2.0(vue@3.3.4)
+  animejs:
+    specifier: ^3.2.1
+    version: 3.2.1
   element-plus:
     specifier: ^2.3.6
     version: 2.3.6(vue@3.3.4)
@@ -40,6 +43,9 @@ devDependencies:
   '@iconify-json/ep':
     specifier: ^1.1.11
     version: 1.1.11
+  '@types/animejs':
+    specifier: ^3.1.7
+    version: 3.1.7
   '@types/node':
     specifier: ^18.16.18
     version: 18.16.18
@@ -1442,6 +1448,13 @@ packages:
       }
     dev: true
 
+  /@types/animejs@3.1.7:
+    resolution:
+      {
+        integrity: sha512-kFSyjM+fLo3oE9noWEtUvF82ttN8fTrKohiEMIrSzEzEjnsCmtO0rBCUQBlSPEb2w8vfN+v4/Zo0tK21Bgmq4g==,
+      }
+    dev: true
+
   /@types/eslint-scope@3.7.4:
     resolution:
       {
@@ -2560,6 +2573,13 @@ packages:
       require-from-string: 2.0.2
       uri-js: 4.4.1
     dev: true
+
+  /animejs@3.2.1:
+    resolution:
+      {
+        integrity: sha512-sWno3ugFryK5nhiDm/2BKeFCpZv7vzerWUcUPyAZLDhMek3+S/p418ldZJbJXo5ZUOpfm2kP2XRO4NJcULMy9A==,
+      }
+    dev: false
 
   /ansi-escapes@4.3.2:
     resolution:
