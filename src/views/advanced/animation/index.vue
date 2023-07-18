@@ -6,6 +6,7 @@
     <ACombin />
     <Animejs />
     <AnimejsEaseOutCubic />
+    <APathToMove />
   </div>
 </template>
 
@@ -16,6 +17,7 @@ import AColor from './components/3-color.vue';
 import ACombin from './components/4-combine.vue';
 import Animejs from './components/5-animejs.vue';
 import AnimejsEaseOutCubic from './components/6-animejsEaseOutCubic.vue';
+import APathToMove from './components/7-pathToMove.vue';
 defineOptions({
   name: 'animation',
 });

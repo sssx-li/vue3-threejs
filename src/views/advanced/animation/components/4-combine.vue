@@ -44,7 +44,6 @@ function addGeometry() {
   threeState.scene?.add(box);
 }
 
-let dirLight: Record<string, any> = {};
 function addLight() {
   // 环境光
   const hemisphere = new THREE.HemisphereLight();
@@ -52,11 +51,10 @@ function addLight() {
   threeState.scene?.add(hemisphere);
 
   // 平行光
-  dirLight = createLight('DirectionalLight', {
+  const dirLight = createLight('DirectionalLight', {
     position: { x: 5, y: 5, z: -5 },
   });
   threeState.scene?.add(dirLight!.lightInstance!);
-  // threeState.scene?.add(dirLight.lightHelper!);
 }
 
 function initAnimation() {
