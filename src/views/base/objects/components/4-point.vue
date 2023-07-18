@@ -1,7 +1,7 @@
 <template>
   <el-card class="mr-14px mb-14px">
-    <template #header> 1.精灵-Sprite </template>
-    <div id="base-sprite"></div>
+    <template #header> 4.点-Point </template>
+    <div id="base-point"></div>
   </el-card>
 </template>
 
@@ -9,13 +9,13 @@
 import { useThree } from '@/hooks';
 
 defineOptions({
-  name: 'base-sprite',
+  name: 'base-point',
   inheritAttrs: false,
 });
 
 const width = 400;
 const height = 400;
-const { threeState, THREE } = useThree('base-sprite', {
+const { threeState, THREE } = useThree('base-point', {
   config: {
     width,
     height,
@@ -38,31 +38,16 @@ const { threeState, THREE } = useThree('base-sprite', {
   cameraPosition: { x: 350, y: 350, z: 350 },
 });
 
-function addSprite() {
-  const material = new THREE.SpriteMaterial({
-    color: 0xff0000,
+const texture = new THREE.TextureLoader().load('/src/assets/imgs/snow.png');
+function addPoint() {
+  const geometry = new THREE.BoxGeometry(100, 100, 100, 60, 60, 60);
+  const material = new THREE.PointsMaterial({
+    map: texture,
   });
-  // 精灵是一个总是面朝着摄像机的平面，通常含有使用一个半透明的纹理。
-  const geometry = new THREE.Sprite(material);
-  geometry.scale.set(30, 30, 1);
-  threeState.scene?.add(geometry);
+  const point = new THREE.Points(geometry, material);
+  threeState.scene?.add(point);
 }
 
-let sprite;
-function addSnow() {
-  const material = new THREE.SpriteMaterial({
-    map: new THREE.TextureLoader().load('/src/assets/imgs/snow.png'),
-    rotation: Math.PI / 2,
-    sizeAttenuation: false,
-    color: 0xff0000,
-  });
-  sprite = new THREE.Sprite(material);
-  sprite.scale.set(30, 30, 1);
-  sprite.position.z = 50;
-  sprite.center.set(0.5, 0.5); // 这个精灵的锚点，也就是精灵旋转时，围绕着旋转的点
-
-  threeState.scene?.add(sprite);
-}
 function addLight() {
   // 点光源
   const point = new THREE.PointLight(0xffffff);
@@ -76,12 +61,10 @@ function addLight() {
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
   requestAnimationFrame(render);
-  sprite!.material.rotation += 0.02;
 }
 
 onMounted(() => {
-  addSprite();
-  addSnow();
+  addPoint();
   addLight();
   render();
 });
