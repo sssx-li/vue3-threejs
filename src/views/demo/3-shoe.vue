@@ -20,13 +20,14 @@ defineOptions({
 });
 type TModel = 'diffuseBeach' | 'diffuseMidnight' | 'diffuseStreet';
 const typeModel = ref<TModel>('diffuseMidnight');
-const width = window.innerWidth - 290;
-const height = window.innerHeight - 100;
-const { threeState, THREE, helperState } = useThree('demo-shoe', {
+let width = window.innerWidth - 290;
+let height = window.innerHeight - 100;
+const { threeState, THREE, helperState, stats } = useThree('demo-shoe', {
   config: {
     width,
     height,
     cameraType: 'PerspectiveCamera',
+    enableStats: true,
     renderOptions: {
       antialias: true,
     },
@@ -35,9 +36,9 @@ const { threeState, THREE, helperState } = useThree('demo-shoe', {
     fov: 75,
     aspect: width / height,
     near: 0.1,
-    far: 10000,
+    far: 1000,
   },
-  cameraPosition: { x: 150, y: 150, z: 150 },
+  cameraPosition: { x: 5, y: 5, z: 5 },
 });
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
@@ -46,7 +47,7 @@ loader.setDRACOLoader(dracoLoader);
 function addShoe() {
   loader.load('/src/assets/models/glTF/MaterialsVariantsShoe.gltf', (gltf) => {
     model = gltf.scene;
-    model.scale.setScalar(800);
+    model.scale.setScalar(30);
     threeState.scene?.add(model);
   });
 }
@@ -77,14 +78,27 @@ watch(typeModel, (val) => {
   });
 });
 
+const resize = () => {
+  width = window.innerWidth - 290;
+  height = window.innerHeight - 100;
+  threeState.camera!.aspect = width / height;
+  threeState.camera!.updateProjectionMatrix();
+  threeState.renderer.setSize(width, height);
+};
+
 onMounted(() => {
   addShoe();
   addLight();
-  helperState.controlInstance!.addEventListener('change', () => {
-    helperState.controlInstance!.minDistance = 100;
-    helperState.controlInstance!.maxDistance = 500;
-  });
   render();
+  stats.value!.dom.style.left = '250px';
+  stats.value!.dom.style.top = '60px';
+  window.addEventListener('resize', resize);
+  console.log('helperState.controlInstance', helperState.controlInstance);
+  helperState.controlInstance!.minDistance = 5;
+  helperState.controlInstance!.maxDistance = 20;
+});
+onUnmounted(() => {
+  window.removeEventListener('resize', resize);
 });
 </script>
 

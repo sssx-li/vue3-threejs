@@ -10,42 +10,37 @@ defineOptions({
   name: 'raycaster',
 });
 
-const width = window.innerWidth - 290;
-const height = window.innerHeight - 100;
+let width = window.innerWidth - 290;
+let height = window.innerHeight - 100;
 const { threeState, THREE } = useThree('base-raycaster', {
   config: {
     width,
     height,
-    enableAxesHelper: true,
-    helperConfig: {
-      axesHelperSize: 200,
-    },
+    cameraType: 'PerspectiveCamera',
     renderOptions: {
       antialias: true,
     },
   },
   cameraOptions: {
-    left: -width / 2,
-    right: width / 2,
-    top: height / 2,
-    bottom: -height / 2,
-    near: 1,
+    fov: 75,
+    aspect: width / height,
+    near: 0.1,
     far: 1000,
   },
-  cameraPosition: { x: 350, y: 350, z: 350 },
+  cameraPosition: { x: 5, y: 5, z: 5 },
 });
 
 const canSelectedMesh = [];
 function addGeometry() {
-  const geometry = new THREE.BoxGeometry(10, 10, 10);
+  const geometry = new THREE.BoxGeometry(0.3, 0.3, 0.3);
   for (let i = 0; i < 200; i++) {
     let material = new THREE.MeshStandardMaterial({
       color: 0xffffff * Math.random(),
     });
     let mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = Math.random() * 200 - 100;
-    mesh.position.y = Math.random() * 200 - 100;
-    mesh.position.z = Math.random() * 200 - 100;
+    mesh.position.x = Math.random() * 5 - 3;
+    mesh.position.y = Math.random() * 5 - 3;
+    mesh.position.z = Math.random() * 5 - 3;
     canSelectedMesh.push(mesh);
     threeState.scene?.add(mesh);
   }
@@ -108,7 +103,7 @@ function addRaycaster() {
 function addLight() {
   // 点光源
   const point = new THREE.PointLight(0xffffff);
-  point.position.set(100, 300, 0);
+  point.position.set(5, 5, 5);
   threeState.scene?.add(point);
   // 环境光
   const ambient = new THREE.AmbientLight(0x444444);
@@ -120,11 +115,24 @@ function render() {
   requestAnimationFrame(render);
 }
 
+const resize = () => {
+  width = window.innerWidth - 290;
+  height = window.innerHeight - 100;
+  threeState.camera!.aspect = width / height;
+  threeState.camera!.updateProjectionMatrix();
+  threeState.renderer.setSize(width, height);
+};
+
 onMounted(() => {
   addGeometry();
   addRaycaster();
   addLight();
   render();
+  window.addEventListener('resize', resize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resize);
 });
 </script>
 

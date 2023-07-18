@@ -10,8 +10,8 @@ defineOptions({
   inheritAttrs: false,
 });
 
-const width = window.innerWidth - 290;
-const height = window.innerHeight - 100;
+let width = window.innerWidth - 290;
+let height = window.innerHeight - 100;
 const { threeState, THREE, stats } = useThree('demo-earth', {
   config: {
     width,
@@ -26,13 +26,13 @@ const { threeState, THREE, stats } = useThree('demo-earth', {
     fov: 75,
     aspect: width / height,
     near: 0.1,
-    far: 10000,
+    far: 1000,
   },
-  cameraPosition: { x: 150, y: 150, z: 150 },
+  cameraPosition: { x: 5, y: 5, z: 5 },
 });
 let earth;
 function addEarth() {
-  const geometry = new THREE.SphereGeometry(80, 32, 32);
+  const geometry = new THREE.SphereGeometry(2, 32, 32);
   const material = new THREE.MeshPhongMaterial({
     map: new THREE.TextureLoader().load('/src/assets/imgs/earth.jpg'),
   });
@@ -43,7 +43,7 @@ function addEarth() {
 function addLight() {
   // 点光源
   const point = new THREE.PointLight(0xffffff);
-  point.position.set(150, 150, 150);
+  point.position.set(5, 5, 5);
   threeState.scene?.add(point);
   // 环境光
   const directional = new THREE.DirectionalLight(0x444444);
@@ -59,10 +59,25 @@ function render() {
   requestAnimationFrame(render);
 }
 
+const resize = () => {
+  width = window.innerWidth - 290;
+  height = window.innerHeight - 100;
+  threeState.camera!.aspect = width / height;
+  threeState.camera!.updateProjectionMatrix();
+  threeState.renderer.setSize(width, height);
+};
+
 onMounted(() => {
   addEarth();
   addLight();
   render();
+  stats.value!.dom.style.left = '250px';
+  stats.value!.dom.style.top = '60px';
+  window.addEventListener('resize', resize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', resize);
 });
 </script>
 
