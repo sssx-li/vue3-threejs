@@ -52,7 +52,6 @@ function addBuilding() {
 
 function render() {
   threeState.renderer.render(threeState.scene!, threeState.camera!);
-  helperState.controlInstance?.update();
   helperState.controlInstance?.update(); // 开启阻尼需要调用update
   requestAnimationFrame(render);
 }
@@ -71,7 +70,7 @@ onMounted(() => {
 
   helperState.controlInstance!.enablePan = false; // 禁止右键平移
   helperState.controlInstance!.enableZoom = false; // 禁止缩放
-  helperState.controlInstance!.enableDamping = true; // 启用阻尼(关心)
+  helperState.controlInstance!.enableDamping = true; // 启用阻尼(惯性)
   helperState.controlInstance!.rotateSpeed = -0.25; // 旋转速度
 
   stats.value!.dom.style.left = '250px';

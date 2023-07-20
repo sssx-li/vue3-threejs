@@ -126,12 +126,6 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/advanced/animation/index.vue'),
           },
           {
-            path: '/advanced/frameTrack',
-            name: 'frameTrack',
-            meta: { title: '轨道', icon: 'form' },
-            component: () => import('@/views/advanced/frameTrack/index.vue'),
-          },
-          {
             path: '/advanced/audio',
             name: 'audio',
             meta: { title: '音频', icon: 'form' },
