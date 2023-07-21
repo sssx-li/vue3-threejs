@@ -34,7 +34,7 @@ let earth;
 function addEarth() {
   const geometry = new THREE.SphereGeometry(2, 32, 32);
   const material = new THREE.MeshPhongMaterial({
-    map: new THREE.TextureLoader().load('/src/assets/imgs/earth.jpg'),
+    map: new THREE.TextureLoader().load('/src/assets/imgs/demo/earth.jpg'),
   });
   earth = new THREE.Mesh(geometry, material);
   threeState.scene?.add(earth);

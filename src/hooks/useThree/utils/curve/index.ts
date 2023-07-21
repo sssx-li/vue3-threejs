@@ -146,6 +146,7 @@ export function createCurve<
 
   // 弧线
   return {
+    points,
     curve,
     geometry,
     material,

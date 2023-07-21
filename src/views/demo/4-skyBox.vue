@@ -29,7 +29,7 @@ const { threeState, THREE, helperState, stats } = useThree('demo-building', {
     near: 0.1,
     far: 1000,
   },
-  cameraPosition: { x: 5, y: 5, z: 5 },
+  cameraPosition: { x: 10, y: 3, z: 10 },
 });
 const loader = new THREE.CubeTextureLoader();
 loader.setPath('/src/assets/imgs/building/');
@@ -38,6 +38,7 @@ function addBuilding() {
     ['px.jpg', 'nx.jpg', 'py.jpg', 'ny.jpg', 'pz.jpg', 'nz.jpg'],
     (texture) => {
       const material = new THREE.MeshStandardMaterial({
+        color: 0x444444,
         roughness: 0, // 材质的粗糙程度。0表示平滑的镜面反射，1表示完全漫反射
         metalness: 0.5, // 材质与金属的相似度[0-1]
         envMap: texture, // 环境贴图

@@ -146,6 +146,12 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/demo/1-earth.vue'),
           },
           {
+            path: '/demo/earthSunMoon',
+            name: 'demoEarthSunMoon',
+            meta: { title: '地月日' },
+            component: () => import('@/views/demo/1.1-earth-sun-moon.vue'),
+          },
+          {
             path: '/demo/snow',
             name: 'demoSnow',
             meta: { title: '雪花' },
@@ -158,10 +164,10 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/demo/3-shoe.vue'),
           },
           {
-            path: '/demo/building',
-            name: 'demoBuilding',
+            path: '/demo/skyBox',
+            name: 'demoSkyBox',
             meta: { title: '包围盒-立方纹理' },
-            component: () => import('@/views/demo/4-building.vue'),
+            component: () => import('@/views/demo/4-skyBox.vue'),
           },
         ],
       },

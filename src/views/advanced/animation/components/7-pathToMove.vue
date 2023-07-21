@@ -21,7 +21,7 @@ defineOptions({
 
 const width = 400;
 const height = 400;
-const { threeState, THREE, helperState } = useThree('advance-pathToMove', {
+const { threeState, THREE } = useThree('advance-pathToMove', {
   config: {
     width,
     height,
@@ -116,32 +116,6 @@ onMounted(() => {
   addGeometry();
   addLight();
   render();
-  document.getElementById('camera-btn')!.addEventListener('click', () => {
-    anime({
-      targets: threeState.camera!.position,
-      duration: 2000,
-      x: 0,
-      y: 1.5,
-      z: 1.5,
-      easing: 'easeOutCubic',
-      update: () => {
-        helperState.controlInstance?.update();
-      },
-    });
-  });
-  document.getElementById('camera-reset-btn')!.addEventListener('click', () => {
-    anime({
-      targets: threeState.camera!.position,
-      duration: 2000,
-      x: 5,
-      y: 5,
-      z: 5,
-      easing: 'easeOutCubic',
-      update: () => {
-        helperState.controlInstance?.update();
-      },
-    });
-  });
 });
 </script>
 
