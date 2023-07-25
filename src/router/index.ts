@@ -169,6 +169,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '包围盒-立方纹理' },
             component: () => import('@/views/demo/4-skyBox.vue'),
           },
+          {
+            path: '/demo/house',
+            name: 'demoHouse',
+            meta: { title: '房子' },
+            component: () => import('@/views/demo/5-house.vue'),
+          },
         ],
       },
     ],
