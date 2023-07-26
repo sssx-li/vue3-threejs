@@ -1,4 +1,3 @@
-import { ObjToUnion } from '@/typing';
 import type { CurveType } from 'three';
 
 import { ILineMaterialOptions, TLineMaterial } from '../line/type';
@@ -64,7 +63,7 @@ export interface ICurveType {
   }; // 从一系列的点中，创建一个平滑的二维样条曲线。内部使用Interpolations.CatmullRom来创建曲线。
 }
 
-export type TCurve = ObjToUnion<ICurveType>;
+export type TCurve = keyof ICurveType;
 
 export interface ICurve<
   T extends TCurve = 'ArcCurve',

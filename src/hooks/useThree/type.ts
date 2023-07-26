@@ -8,8 +8,6 @@ import type {
   Vector3,
 } from 'three';
 
-import { ObjToUnion } from '@/typing';
-
 export interface IWH {
   width: number;
   height: number;
@@ -60,7 +58,7 @@ export interface ICameraType {
     };
   };
 }
-export type TCamera = ObjToUnion<ICameraType>;
+export type TCamera = keyof ICameraType;
 export interface IConfig<T extends TCamera = 'OrthographicCamera'>
   extends Partial<IWH> {
   cameraType?: TCamera | T; // 相机类型

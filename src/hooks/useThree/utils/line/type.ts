@@ -5,13 +5,12 @@ import type {
 import type { LineMaterialParameters } from 'three/examples/jsm/lines/LineMaterial';
 
 import { ICoordinate, IVector, IWH } from '@/hooks/useThree/type';
-import { ObjToUnion } from '@/typing';
 
 export interface ILineMaterialOptions {
   LineBasicMaterial: LineBasicMaterialParameters; // 基础材质参数
   LineDashedMaterial: LineDashedMaterialParameters; // 虚线材质参数
 }
-export type TLineMaterial = ObjToUnion<ILineMaterialOptions>;
+export type TLineMaterial = keyof ILineMaterialOptions;
 
 export interface ILine2 extends Partial<IWH> {
   points: number[] | Float32Array; // 线条点数据集合

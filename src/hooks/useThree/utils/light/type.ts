@@ -1,4 +1,3 @@
-import { ObjToUnion } from '@/typing';
 import type { ColorRepresentation } from 'three';
 
 interface ILightBaseOptions {
@@ -33,7 +32,7 @@ export interface ILightType {
   }; // 聚光灯
 }
 
-export type TLight = ObjToUnion<ILightType>;
+export type TLight = keyof ILightType;
 
 export interface ILight<T extends TLight = 'AmbientLight'> {
   helperConfig?: {
