@@ -175,6 +175,12 @@ const routes: Array<RouteRecordRaw> = [
             meta: { title: '房子' },
             component: () => import('@/views/demo/5-house.vue'),
           },
+          {
+            path: '/demo/naruto',
+            name: 'demoNaruto',
+            meta: { title: '鸣人' },
+            component: () => import('@/views/demo/6-naruto.vue'),
+          },
         ],
       },
     ],
