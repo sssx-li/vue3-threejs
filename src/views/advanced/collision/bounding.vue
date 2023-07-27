@@ -34,7 +34,7 @@ const { threeState, THREE } = useThree('advanced-bounding', {
 let box, box1, boxHelper, box1Helper;
 function addBox() {
   const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+  const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
   box = new THREE.Mesh(geometry, material);
   threeState.scene?.add(box);
   console.log(box);
@@ -88,9 +88,9 @@ function keydown(e: KeyboardEvent) {
       break;
   }
   if (detectCollisions()) {
-    box!.material.color.set('#f60');
-  } else {
     box!.material.color.set(0x00ff00);
+  } else {
+    box!.material.color.set(0xff0000);
   }
 }
 
