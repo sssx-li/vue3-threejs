@@ -1,19 +1,19 @@
-<!-- 碰撞检测-射线检测 -->
+<!-- 碰撞检测-包围盒检测 -->
 <template>
-  <div id="advanced-collision"></div>
+  <div id="advanced-bounding"></div>
 </template>
 
 <script setup lang="ts">
 import { useThree } from '@/hooks';
 
 defineOptions({
-  name: 'advanced-collision',
+  name: 'advanced-bounding',
   inheritAttrs: false,
 });
 
 let width = window.innerWidth - 290;
 let height = window.innerHeight - 100;
-const { threeState, THREE } = useThree('advanced-collision', {
+const { threeState, THREE } = useThree('advanced-bounding', {
   config: {
     width,
     height,
@@ -31,20 +31,25 @@ const { threeState, THREE } = useThree('advanced-collision', {
   cameraPosition: { x: 0, y: 2, z: 5 },
 });
 
-let box, box1;
+let box, box1, boxHelper, box1Helper;
 function addBox() {
   const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+  const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
   box = new THREE.Mesh(geometry, material);
   threeState.scene?.add(box);
   console.log(box);
 
-  const box1Geometry = geometry.clone();
+  const box1Geometry = new THREE.SphereGeometry(0.5);
   const box1Matreial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
   box1 = new THREE.Mesh(box1Geometry, box1Matreial);
   box1.position.set(2, 0, 0);
   threeState.scene?.add(box1);
 
+  // 创建包围盒辅助对象
+  boxHelper = new THREE.BoxHelper(box);
+  threeState.scene?.add(boxHelper);
+  box1Helper = new THREE.BoxHelper(box1);
+  threeState.scene?.add(box1Helper);
   window.addEventListener('keydown', keydown);
 }
 
@@ -83,54 +88,22 @@ function keydown(e: KeyboardEvent) {
       break;
   }
   if (detectCollisions()) {
-    box!.material.color.set(0x00ff00);
+    box!.material.color.set('#f60');
   } else {
-    box!.material.color.set(0xff0000);
+    box!.material.color.set(0x00ff00);
   }
 }
 
-// 碰撞检测-射线法(不准确...)
+// 碰撞检测-包围盒法
 function detectCollisions() {
-  let isCollision = false;
-  // 获取box的模型世界坐标
-  const centerCoord = box!.position.clone();
-  // 获取几何体的顶点对象
-  const position = box!.geometry.attributes.position;
-  // 保存顶点三维向量
-  const vertices = [];
-  for (let i = 0; i < position.count; i++) {
-    vertices.push(
-      new THREE.Vector3(position.getX(i), position.getY(i), position.getZ(i))
-    );
-  }
-  for (let i = 0; i < vertices.length; i++) {
-    // matrixWorld 物体的世界坐标变换 -- 物体旋转、位移 的四维矩阵
-    // applyMatrix4() 对当前物体应用这个变换矩阵，并更新物体的位置、旋转和缩放。
-    // 获取世界坐标下 网格 变换后的坐标
-    let vertexWorldCoord = vertices[i].clone().applyMatrix4(box!.matrixWorld);
+  // 更新包围盒辅助器
+  boxHelper!.update();
+  box1Helper!.update();
 
-    // sub(x) 从该向量减去x向量
-    // 获得由中心指向顶点的向量
-    var dir = vertexWorldCoord.clone().sub(centerCoord);
-
-    // normalize() 将该向量转换为单位向量
-    // Raycaster(光线投射的原点向量, 向射线提供方向的方向向量)
-    let raycaster = new THREE.Raycaster(centerCoord, dir.clone().normalize());
-
-    // 放入要检测的 物体cube2，返回相交物体
-    // intersectObjects('检测和射线相交的一组物体', '若为true，则同时也会检测所有物体的后代')
-    let intersects = raycaster.intersectObjects([box1!], true);
-    if (intersects.length > 0) {
-      console.log(intersects, dir.length());
-      // intersects[0].distance: 射线投射原点和相交部分之间的距离
-      // dir.length()：几何体顶点和几何体中心构成向量的长度
-      // distance 小于 length 则表示物体相交
-      if (intersects.some((item) => item.distance < dir.length())) {
-        isCollision = true;
-      }
-    }
-  }
-  return isCollision;
+  // 判断两个几何体是否相交
+  const cube = new THREE.Box3().setFromObject(box!);
+  const cube1 = new THREE.Box3().setFromObject(box1!);
+  return cube.intersectsBox(cube1);
 }
 
 function render() {

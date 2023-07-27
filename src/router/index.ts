@@ -129,7 +129,22 @@ const routes: Array<RouteRecordRaw> = [
             path: '/advanced/collision',
             name: 'collision',
             meta: { title: '碰撞检测', icon: 'form' },
-            component: () => import('@/views/advanced/collision/index.vue'),
+            redirect: '/advanced/collision/raycaster',
+            children: [
+              {
+                path: '/advanced/collision/raycaster',
+                name: 'raycaster',
+                meta: { title: '碰撞检测-射线', icon: 'form' },
+                component: () => import('@/views/advanced/collision/index.vue'),
+              },
+              {
+                path: '/advanced/collision/bounding',
+                name: 'bounding',
+                meta: { title: '碰撞检测-包围盒', icon: 'form' },
+                component: () =>
+                  import('@/views/advanced/collision/bounding.vue'),
+              },
+            ],
           },
           {
             path: '/advanced/audio',
