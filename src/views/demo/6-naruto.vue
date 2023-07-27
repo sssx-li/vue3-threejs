@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import { createLight, useThree } from '@/hooks';
+import { useThree } from '@/hooks';
 defineOptions({
   name: 'demo-naruto',
   inheritAttrs: false,
@@ -36,7 +36,7 @@ const { threeState, THREE, stats } = useThree('demo-naruto', {
 });
 threeState.scene!.background = new THREE.Color(0x87ceeb);
 threeState.scene!.fog = new THREE.Fog(0x87ceeb, 1, 80); // 雾
-let direct; // 平行光
+let directLight; // 平行光
 
 let modelMesh;
 // 动画
@@ -48,17 +48,16 @@ const animationControl: {
   action() {},
 }; // 动画控制
 
-// ['前进', '后退', '左移', '右移']
+// ['前进', '后退', '左移', '右移', '攻击', '连续动作']
 const keyCodes = ['KeyW', 'KeyS', 'KeyA', 'KeyD', 'KeyJ', 'Space'] as const;
 type KeyCodes = (typeof keyCodes)[number];
 
 let actionNum = 24; // 模型动作序号 24 为站立时的动作
-let curKeyCodeArr: KeyCodes[] = []; // 当前按下的按键
-const duration = 1000; // 键盘按下时动作失效时间
+let curKeyCodeArr: KeyCodes[] = []; // 保存当前按下的按键
 let flowTimer: any;
 // 攻击动作
 const attackList = [12, 8, 9, 10];
-let attackIndex = 0;
+let attackIndex = 0; // 索引
 let attackTimer: any;
 
 // 地面
@@ -95,7 +94,7 @@ function addModel() {
         child.castShadow = true; // 模型的每个部位都开启投影
       }
     });
-    direct!.lightInstance.target = mesh; // 灯光聚焦模型
+    directLight!.target = mesh; // 灯光聚焦模型
     modelMesh = mesh;
     threeState.scene?.add(mesh);
 
@@ -123,24 +122,14 @@ function addModel() {
 // 光照
 function addLight() {
   // 半球光
-  const hemi = createLight('HemisphereLight', {
-    options: {
-      skyColor: 0xffffff,
-      groundColor: 0x000000,
-    },
-  });
-  threeState.scene?.add(hemi.lightInstance!);
+  const hemisphere = new THREE.HemisphereLight(0xffffff, 0x000000);
+  threeState.scene?.add(hemisphere);
 
   // 平行光
-  direct = createLight('DirectionalLight', {
-    options: {
-      color: '#f60',
-    },
-    position: { x: 0, y: 5, z: 5 },
-  });
-  direct.lightInstance!.castShadow = true; // 开启灯光投影
-  threeState.scene?.add(direct.lightInstance!);
-  // threeState.scene?.add(direct.lightHelper!); // 灯光辅助线
+  directLight = new THREE.DirectionalLight(0xaaaaaa);
+  directLight.position.set(0, 5, 5);
+  directLight.castShadow = true; // 开启灯光投影
+  threeState.scene?.add(directLight);
 }
 
 function enableKeys(...rest: KeyCodes[]) {
@@ -154,28 +143,28 @@ function moveAction() {
   if (enableKeys('KeyW')) {
     modelMesh!.position.z -= 0.02;
     threeState.camera!.position.z -= 0.02;
-    direct!.lightInstance.position.z -= 0.02;
+    directLight!.position.z -= 0.02;
     modelMesh!.rotation.y = Math.PI;
   }
   // 后退
   if (enableKeys('KeyS')) {
     modelMesh!.position.z += 0.02;
     threeState.camera!.position.z += 0.02;
-    direct!.lightInstance.position.z += 0.02;
+    directLight!.position.z += 0.02;
     modelMesh!.rotation.y = 0;
   }
   // 左移
   if (enableKeys('KeyA')) {
     modelMesh!.position.x -= 0.02;
     threeState.camera!.position.x -= 0.02;
-    direct!.lightInstance.position.x -= 0.02;
+    directLight!.position.x -= 0.02;
     modelMesh!.rotation.y = -Math.PI / 2;
   }
   // 右移
   if (enableKeys('KeyD')) {
     modelMesh!.position.x += 0.02;
     threeState.camera!.position.x += 0.02;
-    direct!.lightInstance.position.x += 0.02;
+    directLight!.position.x += 0.02;
     modelMesh!.rotation.y = Math.PI / 2;
   }
   // 前右
@@ -208,7 +197,7 @@ function flowAction(type: 'keydown' | 'keyup' = 'keydown') {
       // 还原-执行初始动画
       actionNum = 24;
       animationControl.action(actionNum);
-    }, duration);
+    }, modelMesh!.animations[actionNum].duration * 1000);
     return;
   }
   actionNum++;
@@ -228,7 +217,7 @@ function attackAction(type: 'keydown' | 'keyup' = 'keydown') {
       // 还原-执行初始动画
       actionNum = 24;
       animationControl.action(actionNum);
-    }, duration);
+    }, modelMesh!.animations[attackList[attackIndex - 1]].duration * 1000);
     return;
   }
   attackIndex++;
@@ -277,8 +266,7 @@ function render() {
   if (
     modelMesh! &&
     curKeyCodeArr.length > 0 &&
-    !curKeyCodeArr.includes('KeyJ') &&
-    !curKeyCodeArr.includes('Space')
+    !curKeyCodeArr.some((item) => ['KeyJ', 'Space'].includes(item))
   ) {
     moveAction();
   }
