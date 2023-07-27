@@ -214,7 +214,7 @@ function addfloor() {
 }
 
 // 门框
-let door, pAnimation, rAnimation;
+let door, rAnimation;
 function addDoor() {
   const doorShape = new THREE.Shape();
   doorShape.moveTo(-0.25, 0);
@@ -237,33 +237,28 @@ function addDoor() {
   const doorFrame = new THREE.Mesh(doorFrameGeometry, doorFrameMaterial);
   doorGroup.add(doorFrame);
 
-  const doorGeometry = new THREE.BoxGeometry(0.45, 0.72, 0.04);
+  const doorWidth = 0.45;
+  const doorGeometry = new THREE.BoxGeometry(doorWidth, 0.72, 0.04);
   const doorMaterial = new THREE.MeshLambertMaterial({
     map: loader.load('door.jpg'),
   });
   door = new THREE.Mesh(doorGeometry, doorMaterial);
   door.name = '门板';
-  door.position.set(0, 0.4, 0.05);
-  pAnimation = anime({
-    targets: door.position,
-    easing: 'linear',
-    duration: 500,
-    autoplay: false,
-    x: -0.165,
-    y: 0.4,
-    z: -0.126,
-  });
+  // door.position.set(0, 0.4, 0.05);
+  // 门的容器(要使门的旋转围绕左侧轴, 就在透明空间内让宽度是门的两倍，中心轴就变成了原来的一侧;即原来为[0, doorWidth] 变为[-doorWidth/2, doorWidth/2 + doorWidth])
+  const doorWrap = new THREE.Object3D();
+  doorWrap.position.set(-doorWidth / 2, 0.4, 0.05);
+  door.position.set(doorWidth / 2, 0, 0);
+  doorWrap.add(door);
   rAnimation = anime({
-    targets: door.rotation,
+    targets: doorWrap.rotation,
     easing: 'linear',
     duration: 500,
     autoplay: false,
-    x: 0,
-    y: 1.2,
-    z: 0,
+    y: Math.PI / 3,
   });
 
-  doorGroup.add(door);
+  doorGroup.add(doorWrap);
   doorGroup.position.x = 1.41;
   doorGroup.position.z = 0.05;
   doorGroup.rotation.y = Math.PI / 2;
@@ -304,14 +299,12 @@ function addRaycaster() {
     // 计算物体和射线的交点
     let intersects = raycaster.intersectObjects(threeState.scene!.children);
     if (intersects.length > 0) {
-      // 取第一个元素, 并将其改变颜色
+      // 取第一个元素
       const doorObj = intersects.find((item) => item.object.name === '门板');
       if (doorObj) {
-        if (doorObj.object.position.x < 0 || pAnimation!.completed) {
-          pAnimation!.reverse();
+        if (doorObj.object.position.x < 0 || rAnimation!.completed) {
           rAnimation!.reverse();
         }
-        pAnimation!.restart();
         rAnimation!.restart();
       }
     }

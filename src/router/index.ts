@@ -126,6 +126,12 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/advanced/animation/index.vue'),
           },
           {
+            path: '/advanced/collision',
+            name: 'collision',
+            meta: { title: '碰撞检测', icon: 'form' },
+            component: () => import('@/views/advanced/collision/index.vue'),
+          },
+          {
             path: '/advanced/audio',
             name: 'audio',
             meta: { title: '音频', icon: 'form' },
