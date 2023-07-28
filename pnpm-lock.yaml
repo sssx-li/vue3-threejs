@@ -11,6 +11,9 @@ dependencies:
   animejs:
     specifier: ^3.2.1
     version: 3.2.1
+  cannon-es:
+    specifier: ^0.20.0
+    version: 0.20.0
   element-plus:
     specifier: ^2.3.6
     version: 2.3.6(vue@3.3.4)
@@ -2977,6 +2980,13 @@ packages:
         integrity: sha512-5uo7eoOp2mKbWyfMXnGO9rJWOGU8duvzEiYITW+wivukL7yHH4gX9yuRaobu6El4jPxo6jKZfG+N6fB621GD/Q==,
       }
     dev: true
+
+  /cannon-es@0.20.0:
+    resolution:
+      {
+        integrity: sha512-eZhWTZIkFOnMAJOgfXJa9+b3kVlvG+FX4mdkpePev/w/rP5V8NRquGyEozcjPfEoXUlb+p7d9SUcmDSn14prOA==,
+      }
+    dev: false
 
   /chalk@1.1.3:
     resolution:

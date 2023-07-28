@@ -42,7 +42,7 @@ function addPlane() {
   const geometry = new THREE.BoxGeometry(10, 1, 10);
   const material = new THREE.ShadowMaterial({ color: 0x111111 });
   plane = new THREE.Mesh(geometry, material);
-  plane.position.set(0, -1, 0);
+  plane.position.set(0, -0.5, 0);
   threeState.scene?.add(plane);
 }
 
