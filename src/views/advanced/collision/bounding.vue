@@ -1,6 +1,14 @@
 <!-- 碰撞检测-包围盒检测 -->
 <template>
-  <div id="advanced-bounding"></div>
+  <div class="bounding-container relative">
+    <div id="advanced-bounding"></div>
+    <div class="desc absolute top-10px right-10px c-#fff">
+      W: 上移 <br />
+      S: 下移 <br />
+      A: 左移 <br />
+      D: 右移
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -34,13 +42,13 @@ const { threeState, THREE } = useThree('advanced-bounding', {
 let box, box1, boxHelper, box1Helper;
 function addBox() {
   const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   box = new THREE.Mesh(geometry, material);
   threeState.scene?.add(box);
   console.log(box);
 
   const box1Geometry = new THREE.SphereGeometry(0.5);
-  const box1Matreial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
+  const box1Matreial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
   box1 = new THREE.Mesh(box1Geometry, box1Matreial);
   box1.position.set(2, 0, 0);
   threeState.scene?.add(box1);
@@ -54,10 +62,6 @@ function addBox() {
 }
 
 function addLight() {
-  // 点光源
-  const point = new THREE.PointLight(0xffffff);
-  point.position.set(5, 5, 5);
-  threeState.scene?.add(point);
   // 环境光
   const ambient = new THREE.AmbientLight(0x444444);
   threeState.scene?.add(ambient);

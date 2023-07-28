@@ -1,5 +1,15 @@
 <template>
-  <div id="demo-naruto"></div>
+  <div class="naruto-container relative">
+    <div id="demo-naruto"></div>
+    <div class="desc absolute top-10px right-10px">
+      W: 前进 <br />
+      S: 后退 <br />
+      A: 左移 <br />
+      D: 右移 <br />
+      J: 攻击 <br />
+      Space: 连续动作
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

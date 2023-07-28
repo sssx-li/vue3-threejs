@@ -134,13 +134,13 @@ const routes: Array<RouteRecordRaw> = [
               {
                 path: '/advanced/collision/raycaster',
                 name: 'raycaster',
-                meta: { title: '碰撞检测-射线', icon: 'form' },
+                meta: { title: '射线', icon: 'form' },
                 component: () => import('@/views/advanced/collision/index.vue'),
               },
               {
                 path: '/advanced/collision/bounding',
                 name: 'bounding',
-                meta: { title: '碰撞检测-包围盒', icon: 'form' },
+                meta: { title: '包围盒', icon: 'form' },
                 component: () =>
                   import('@/views/advanced/collision/bounding.vue'),
               },
