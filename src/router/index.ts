@@ -144,6 +144,13 @@ const routes: Array<RouteRecordRaw> = [
                 component: () =>
                   import('@/views/advanced/collision/bounding.vue'),
               },
+              {
+                path: '/advanced/collision/cannon',
+                name: 'cannon',
+                meta: { title: 'Cannon', icon: 'form' },
+                component: () =>
+                  import('@/views/advanced/collision/cannon.vue'),
+              },
             ],
           },
           {

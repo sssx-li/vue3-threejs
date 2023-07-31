@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import * as CANNON from 'cannon-es';
 import { createLight, useThree } from '@/hooks';
+import CannonDebugger from 'cannon-es-debugger';
 
 defineOptions({
   name: 'advance-cannon',
@@ -136,6 +137,7 @@ function HitEvent(e: any) {
 }
 
 const clock = new THREE.Clock();
+const cannonDebugRenderer = CannonDebugger(threeState.scene!, physicsWorld, {});
 function render() {
   let deltaTime = clock.getDelta();
   // 更新物理引擎世界的物体
@@ -143,9 +145,9 @@ function render() {
   // 将物理世界里的物体位置赋值给threejs里的物体
   ball!.position.copy(sphereBody!.position);
   threeState.renderer.render(threeState.scene!, threeState.camera!);
+  cannonDebugRenderer.update();
   requestAnimationFrame(render);
 }
-
 onMounted(() => {
   threeState.scene!.background = new THREE.Color(0x888888); // 修改场景背景
   addPlane();
